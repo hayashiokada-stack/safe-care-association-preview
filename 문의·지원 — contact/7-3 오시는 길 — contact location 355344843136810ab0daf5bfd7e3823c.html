@@ -96,14 +96,61 @@ label{display:block;font-size:.85rem;font-weight:600;color:var(--text);margin-bo
 .hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px}
 .hamburger span{display:block;width:22px;height:2px;background:#1a2332;margin:5px 0;transition:all .3s}
 @media(min-width:901px){.nav-item:hover .dropdown{display:block}.nav-item:hover>.nav-link{color:#1b3a6b;background:#f0f4ff}}}
-@media(max-width:900px){.nav-menu,.nav-actions{display:none}.hamburger{display:block}}
+@media(max-width:900px){
+  .nav-menu,.nav-actions{display:none}
+  .hamburger{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px}
+  #site-nav.mobile-open .nav-menu{
+    display:flex!important;
+    flex-direction:column;
+    position:fixed;
+    top:68px;left:0;right:0;
+    background:#fff;
+    padding:8px 0 80px;
+    border-top:2px solid #dde3ee;
+    box-shadow:0 8px 24px rgba(27,58,107,.12);
+    z-index:998;
+    gap:0;
+    align-items:stretch;
+    max-height:calc(100vh - 68px);
+    overflow-y:auto;
+  }
+  #site-nav.mobile-open .nav-actions{
+    display:block!important;
+    position:fixed;
+    bottom:0;left:0;right:0;
+    padding:12px 20px;
+    background:#fff;
+    border-top:1px solid #dde3ee;
+    z-index:999;
+  }
+  #site-nav.mobile-open .btn-nav-primary{display:block;text-align:center;padding:13px}
+  .nav-menu .nav-item{width:100%}
+  .nav-menu .nav-link{padding:13px 24px;border-radius:0;border-bottom:1px solid #f0f4ff;font-size:.97rem}
+  #site-nav.mobile-open .nav-menu .dropdown{
+    display:block!important;
+    position:static;
+    box-shadow:none;
+    border:none;
+    border-radius:0;
+    padding:0;margin:0;
+    background:#f8faff;
+  }
+  #site-nav.mobile-open .nav-menu .dropdown a{
+    padding:10px 24px 10px 40px;
+    font-size:.9rem;
+    border-bottom:1px solid #f0f0f0;
+  }
+  .hamburger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .hamburger.is-open span:nth-child(2){opacity:0}
+  .hamburger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+}
 </style>
 <nav id="site-nav">
 <div class="nav-container">
 <a href="../index.html" class="nav-logo"><img src="../images/logo.png" alt="한국안전돌봄협회 로고" style="height:44px;width:44px;object-fit:contain;border-radius:0"><div class="logo-text"><span class="logo-main">한국안전돌봄협회</span><span class="logo-sub">Korea Safe Care Association</span></div></a>
 <div class="nav-menu"><div class="nav-item"><a href="#" class="nav-link ">협회소개<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="../협회소개 — about/2-1 인사말 — about greeting 35534484313681608185c31cf6f46e84.html">이사장 인사말</a><a href="../협회소개 — about/2-2 설립목적·비전 — about vision 355344843136815ab98bd488ba8d25ab.html">설립목적 &amp; 비전</a><a href="../협회소개 — about/2-3 조직도·임원 — about org 355344843136817fb973fe2ffe887d58.html">조직도 &amp; 임원</a><a href="../협회소개 — about/2-4 연혁·오시는길 — about history 35534484313681ffbdbbe737f9759330.html">연혁 &amp; 오시는 길</a></div></div><div class="nav-item"><a href="#" class="nav-link ">사업안내<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="../사업안내 — business/3-1 안전교육 사업 — business safety-edu 99c1b0d7ceae4a8bb040977beaf3f53c.html">안전교육 사업</a><a href="../사업안내 — business/3-2 돌봄서비스 사업 — business care 35534484313681cf85b8e86450ec1988.html">돌봄서비스 사업</a><a href="../사업안내 — business/3-3 컨설팅·자문 — business consulting 3553448431368105aa0df30979273fac.html">컨설팅 &amp; 자문</a><a href="../사업안내 — business/3-4 정부·기관 협력 — business partnership 35534484313681fda5e3f74c097e63c4.html">정부·기관 협력</a></div></div><div class="nav-item"><a href="#" class="nav-link ">교육신청<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="../교육신청 ⭐ 핵심 — edu/4-1 교육과정 목록 — edu list 3553448431368158b62fc7aaf308d533.html">교육과정 목록</a><a href="../교육신청 ⭐ 핵심 — edu/4-3 신청 폼 — edu apply 35534484313681c6a054d1e7fec39a0d.html">교육 신청하기</a></div></div><div class="nav-item"><a href="../소식·자료 — news/5-1 공지사항 — news notice 35534484313681eca8d4f7d0ccdd99a7.html" class="nav-link ">소식·자료<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="../소식·자료 — news/5-1 공지사항 — news notice 35534484313681eca8d4f7d0ccdd99a7.html">공지사항</a><a href="../소식·자료 — news/5-2 보도자료 — news press 35534484313681d782a4e94d2b1a97a2.html">보도자료</a><a href="../소식·자료 — news/5-3 자료실 — resources 35534484313681698474e92642b56d98.html">자료실</a></div></div><div class="nav-item"><a href="../문의·지원 — contact/7-1 온라인 문의 — contact 35534484313681b9a979d9a2d60e3d81.html" class="nav-link active">문의·지원<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="../문의·지원 — contact/7-1 온라인 문의 — contact 35534484313681b9a979d9a2d60e3d81.html">온라인 문의</a><a href="../문의·지원 — contact/7-2 FAQ — contact faq 355344843136817c999debc870fb5fd1.html">자주 묻는 질문</a><a href="../문의·지원 — contact/7-3 오시는 길 — contact location 355344843136810ab0daf5bfd7e3823c.html">오시는 길</a></div></div></div>
 <div class="nav-actions"><a href="../교육신청 ⭐ 핵심 — edu/4-3 신청 폼 — edu apply 35534484313681c6a054d1e7fec39a0d.html" class="btn-nav-primary">교육 신청하기</a></div>
-<button class="hamburger" onclick="var m=this.closest('nav').querySelector('.nav-menu');m.style.display=m.style.display==='flex'?'none':'flex'"><span></span><span></span><span></span></button>
+<button class="hamburger" id="hamburgerBtn" onclick="this.classList.toggle('is-open');document.getElementById('site-nav').classList.toggle('mobile-open')"><span></span><span></span><span></span></button>
 </div>
 <script>
 (function(){/* hover only */})();

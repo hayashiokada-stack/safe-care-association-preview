@@ -784,18 +784,19 @@ blockquote.quote-large {
   if(btn&&menu){
     btn.addEventListener('click',function(e){
       e.stopPropagation();
-      var open=menu.style.display==='flex';
-      menu.style.display=open?'none':'flex';
-      menu.style.flexDirection='column';
-      menu.style.position='absolute';
-      menu.style.top='68px';
-      menu.style.left='0';
-      menu.style.right='0';
-      menu.style.background='#fff';
-      menu.style.padding='12px 16px';
-      menu.style.boxShadow='0 8px 24px rgba(27,58,107,.12)';
-      menu.style.zIndex='999';
-      if(actions) actions.style.display=open?'none':'none';
+      var open=menu.classList.contains('mob-open');
+      btn.classList.toggle('is-open',!open);
+      if(!open){
+        menu.classList.add('mob-open');
+        Object.assign(menu.style,{display:'flex',flexDirection:'column',position:'fixed',top:'68px',left:'0',right:'0',bottom:'0',background:'#fff',padding:'8px 0 80px',boxShadow:'0 8px 24px rgba(27,58,107,.12)',zIndex:'998',overflowY:'auto',gap:'0',alignItems:'stretch'});
+        if(actions){Object.assign(actions.style,{display:'block',position:'fixed',bottom:'0',left:'0',right:'0',padding:'12px 20px',background:'#fff',borderTop:'1px solid #dde3ee',zIndex:'999'});}
+        var aLink=actions&&actions.querySelector('.btn-nav-primary');
+        if(aLink){aLink.style.display='block';aLink.style.textAlign='center';aLink.style.padding='13px';}
+      } else {
+        menu.classList.remove('mob-open');
+        menu.removeAttribute('style');
+        if(actions){actions.removeAttribute('style');}
+      }
     });
   }
   var items=document.querySelectorAll('#site-nav .nav-item');

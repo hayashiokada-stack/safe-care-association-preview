@@ -70,7 +70,54 @@ section.alt{background:var(--bg)}
 .hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px}
 .hamburger span{display:block;width:22px;height:2px;background:#1a2332;margin:5px 0;transition:all .3s}
 @media(min-width:901px){.nav-item:hover .dropdown{display:block}.nav-item:hover>.nav-link{color:#1b3a6b;background:#f0f4ff}}}
-@media(max-width:900px){.nav-menu,.nav-actions{display:none}.hamburger{display:block}}
+@media(max-width:900px){
+  .nav-menu,.nav-actions{display:none}
+  .hamburger{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px}
+  #site-nav.mobile-open .nav-menu{
+    display:flex!important;
+    flex-direction:column;
+    position:fixed;
+    top:68px;left:0;right:0;
+    background:#fff;
+    padding:8px 0 80px;
+    border-top:2px solid #dde3ee;
+    box-shadow:0 8px 24px rgba(27,58,107,.12);
+    z-index:998;
+    gap:0;
+    align-items:stretch;
+    max-height:calc(100vh - 68px);
+    overflow-y:auto;
+  }
+  #site-nav.mobile-open .nav-actions{
+    display:block!important;
+    position:fixed;
+    bottom:0;left:0;right:0;
+    padding:12px 20px;
+    background:#fff;
+    border-top:1px solid #dde3ee;
+    z-index:999;
+  }
+  #site-nav.mobile-open .btn-nav-primary{display:block;text-align:center;padding:13px}
+  .nav-menu .nav-item{width:100%}
+  .nav-menu .nav-link{padding:13px 24px;border-radius:0;border-bottom:1px solid #f0f4ff;font-size:.97rem}
+  #site-nav.mobile-open .nav-menu .dropdown{
+    display:block!important;
+    position:static;
+    box-shadow:none;
+    border:none;
+    border-radius:0;
+    padding:0;margin:0;
+    background:#f8faff;
+  }
+  #site-nav.mobile-open .nav-menu .dropdown a{
+    padding:10px 24px 10px 40px;
+    font-size:.9rem;
+    border-bottom:1px solid #f0f0f0;
+  }
+  .hamburger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .hamburger.is-open span:nth-child(2){opacity:0}
+  .hamburger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+}
 </style>
 <nav id="site-nav">
 <div class="nav-container">
@@ -83,7 +130,7 @@ section.alt{background:var(--bg)}
 <div class="nav-item"><a href="../문의·지원 — contact/7-1 온라인 문의 — contact 35534484313681b9a979d9a2d60e3d81.html" class="nav-link">문의·지원<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="../문의·지원 — contact/">온라인 문의</a><a href="../문의·지원 — contact/">자주 묻는 질문</a></div></div>
 </div>
 <div class="nav-actions"><a href="../교육신청 ⭐ 핵심 — edu/" class="btn-nav-primary">교육 신청하기</a></div>
-<button class="hamburger" onclick="var m=this.closest('nav').querySelector('.nav-menu');m.style.display=m.style.display==='flex'?'none':'flex'"><span></span><span></span><span></span></button>
+<button class="hamburger" id="hamburgerBtn" onclick="this.classList.toggle('is-open');document.getElementById('site-nav').classList.toggle('mobile-open')"><span></span><span></span><span></span></button>
 </div>
 <script>
 (function(){/* hover only */})();
