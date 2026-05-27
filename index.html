@@ -247,7 +247,26 @@
     <button class="nav-hamburger" id="hamburgerBtn" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
   </div>
 <script>
-(function(){/* hover only */})();
+(function(){
+  var items = document.querySelectorAll('#nav .nav-menu > li');
+  items.forEach(function(item){
+    var link = item.querySelector('a');
+    var dd = item.querySelector('.dropdown');
+    if(!dd) return;
+    link.addEventListener('click', function(e){
+      e.preventDefault(); e.stopPropagation();
+      var isOpen = dd.classList.contains('open');
+      document.querySelectorAll('#nav .dropdown.open').forEach(function(d){ d.classList.remove('open'); });
+      if(!isOpen){ dd.classList.add('open'); }
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('#nav .dropdown.open').forEach(function(d){ d.classList.remove('open'); });
+  });
+  document.querySelectorAll('#nav .dropdown').forEach(function(dd){
+    dd.addEventListener('click', function(e){ e.stopPropagation(); });
+  });
+})();
 </script>
 </nav>
 

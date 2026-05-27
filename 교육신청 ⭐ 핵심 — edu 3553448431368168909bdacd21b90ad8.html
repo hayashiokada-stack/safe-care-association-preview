@@ -741,72 +741,84 @@ blockquote.quote-large {
 }
 	
 </style></head><body>
-<style>
-#site-nav{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #dde3ee;box-shadow:0 2px 12px rgba(27,58,107,.07);height:68px;font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif}
-#site-nav .snc{max-width:1140px;margin:0 auto;padding:0 24px;display:flex;align-items:center;height:100%}
-.sn-logo{display:flex;align-items:center;gap:10px;margin-right:auto;text-decoration:none}
-.sn-logo .slm{width:38px;height:38px;border-radius:7px;background:#1b3a6b;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:white;font-weight:800}
-.sn-logo .slt strong{font-size:.92rem;font-weight:700;color:#1b3a6b;display:block;line-height:1.2}
-.sn-logo .slt span{font-size:.68rem;color:#6b7a93}
-.sn-menu{display:flex;list-style:none;gap:2px;margin:0;padding:0}
-.sn-menu>li{position:relative}
-.sn-menu>li>a{display:flex;align-items:center;gap:3px;padding:8px 12px;font-size:.85rem;font-weight:600;color:#222b3a;border-radius:8px;text-decoration:none;white-space:nowrap;transition:background .15s,color .15s}
-.sn-menu>li>a:hover,.sn-menu>li:hover>a{background:#f4f7fb;color:#1b3a6b}
-.sn-drop{display:none;position:absolute;top:calc(100% + 6px);left:0;min-width:180px;background:#fff;border:1px solid #dde3ee;border-radius:10px;box-shadow:0 4px 24px rgba(27,58,107,.10);padding:5px 0;z-index:999}
-.sn-menu>li:hover .sn-drop{display:block}
-.sn-drop a{display:block;padding:8px 16px;font-size:.84rem;color:#222b3a;text-decoration:none;transition:background .12s,color .12s}
-.sn-drop a:hover{background:#f4f7fb;color:#1a8a7a}
-.sn-cta{margin-left:12px;background:#1a8a7a!important;color:#fff!important;padding:8px 18px!important;border-radius:22px!important;font-weight:700!important;font-size:.84rem!important;text-decoration:none;white-space:nowrap;transition:background .15s}
-.sn-cta:hover{background:#22b09c!important}
-.sn-home{font-size:.82rem;color:#6b7a93;margin-right:8px;text-decoration:none;padding:6px 10px;border-radius:6px}
-.sn-home:hover{background:#f4f7fb;color:#1b3a6b}
-@media(max-width:768px){.sn-menu{display:none}.sn-cta{display:none}}
+<style id="site-nav-style">
+#site-nav{position:sticky;top:0;z-index:1000;background:#fff;box-shadow:0 2px 12px rgba(27,58,107,.10);font-family:'Noto Sans KR',sans-serif}
+.nav-container{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;height:68px;gap:32px}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-logo img{height:44px;width:44px;object-fit:contain;flex-shrink:0;border-radius:0}
+.logo-text{display:flex;flex-direction:column;line-height:1.2}
+.logo-main{font-size:.95rem;font-weight:700;color:#1b3a6b}
+.logo-sub{font-size:.65rem;color:#1a8a7a;font-weight:500}
+.nav-menu{display:flex;align-items:center;gap:4px;flex:1}
+.nav-item{position:relative}
+.nav-link{display:flex;align-items:center;gap:4px;padding:8px 14px;color:#1a2332;text-decoration:none;font-size:.9rem;font-weight:500;border-radius:8px;transition:all .2s;white-space:nowrap}
+.nav-link:hover,.nav-link.active{color:#1b3a6b;background:#f0f4ff}
+.nav-link svg{transition:transform .2s}
+.nav-link.dd-open svg{transform:rotate(180deg)}
+.dropdown{display:none;position:absolute;top:calc(100% + 8px);left:0;background:#fff;border:1px solid #dde3ee;border-radius:12px;padding:8px;min-width:200px;box-shadow:0 8px 32px rgba(27,58,107,.12);z-index:200}
+.dropdown.open{display:block}
+.dropdown a{display:block;padding:8px 14px;color:#1a2332;text-decoration:none;font-size:.88rem;border-radius:8px;transition:all .2s}
+.dropdown a:hover{background:#f0f4ff;color:#1b3a6b}
+.nav-actions{margin-left:auto;flex-shrink:0}
+.btn-nav-primary{background:linear-gradient(135deg,#1b3a6b,#1a8a7a);color:#fff !important;padding:9px 20px;border-radius:8px;text-decoration:none;font-size:.88rem;font-weight:600;transition:opacity .2s}
+.btn-nav-primary:hover{opacity:.9}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;flex-shrink:0}
+.hamburger span{display:block;width:22px;height:2px;background:#1a2332;margin:5px 0;transition:all .3s}
+@media(max-width:900px){
+  .nav-menu,.nav-actions{display:none !important}
+  .hamburger{display:block !important}
+}
 </style>
 <nav id="site-nav">
-  <div class="snc">
-    <a href="index.html" class="sn-logo">
-      <div class="slm">안</div>
-      <div class="slt"><strong>한국안전돌봄협회</strong><span>Korea Safe Care Association</span></div>
-    </a>
-    <ul class="sn-menu">
-      <li><a href="협회소개 — about 3553448431368143bd4adf4b70bc7fc2.html">협회소개</a><div class="sn-drop">
-        <a href="협회소개 — about/2-1 인사말 — about greeting 35534484313681608185c31cf6f46e84.html">이사장 인사말</a>
-        <a href="협회소개 — about/2-2 설립목적·비전 — about vision 355344843136815ab98bd488ba8d25ab.html">설립목적 &amp; 비전</a>
-        <a href="협회소개 — about/2-3 조직도·임원 — about org 355344843136817fb973fe2ffe887d58.html">조직도 &amp; 임원</a>
-        <a href="협회소개 — about/2-4 연혁·오시는길 — about history 35534484313681ffbdbbe737f9759330.html">연혁 &amp; 오시는 길</a>
-      </div></li>
-      <li><a href="사업안내 — business 3553448431368175b3e5e739c2c6627b.html">사업안내</a><div class="sn-drop">
-        <a href="사업안내 — business/3-1 안전교육 사업 — business safety-edu 99c1b0d7ceae4a8bb040977beaf3f53c.html">안전교육 사업</a>
-        <a href="사업안내 — business/3-2 돌봄서비스 사업 — business care 35534484313681cf85b8e86450ec1988.html">돌봄서비스 사업</a>
-        <a href="사업안내 — business/3-3 컨설팅·자문 — business consulting 3553448431368105aa0df30979273fac.html">컨설팅 &amp; 자문</a>
-        <a href="사업안내 — business/3-4 정부·기관 협력 — business partnership 35534484313681fda5e3f74c097e63c4.html">정부·기관 협력</a>
-      </div></li>
-      <li><a href="교육신청 ⭐ 핵심 — edu 3553448431368168909bdacd21b90ad8.html">교육신청</a><div class="sn-drop">
-        <a href="교육신청 ⭐ 핵심 — edu/4-1 교육과정 목록 — edu list 3553448431368158b62fc7aaf308d533.html">교육과정 목록</a>
-        <a href="교육신청 ⭐ 핵심 — edu/4-3 신청 폼 — edu apply 35534484313681c6a054d1e7fec39a0d.html">교육 신청하기</a>
-        <a href="교육신청 ⭐ 핵심 — edu/4-4 신청 완료·확인 — edu confirm 35534484313681df9adfc1529d32aca6.html">신청 확인</a>
-      </div></li>
-      <li><a href="소식·자료 — news 3553448431368177b939df578ff8fb1e.html">소식&amp;자료</a><div class="sn-drop">
-        <a href="소식·자료 — news/5-1 공지사항 — news notice 35534484313681eca8d4f7d0ccdd99a7.html">공지사항</a>
-        <a href="소식·자료 — news/5-2 보도자료 — news press 35534484313681d782a4e94d2b1a97a2.html">보도자료</a>
-        <a href="소식·자료 — news/5-3 자료실 — resources 35534484313681698474e92642b56d98.html">자료실</a>
-        
-      </div></li>
-      <li><a href="회원센터 — member 355344843136818c904de881ef0ef060.html">회원센터</a><div class="sn-drop">
-        <a href="회원센터 — member/6-1 회원가입 — member join 35534484313681388487ca1ce202301b.html">회원가입</a>
-        <a href="회원센터 — member/6-2 로그인 — member login 355344843136810da091f774fa0c1938.html">로그인</a>
-        <a href="회원센터 — member/6-3 마이페이지 — member mypage 3553448431368117a0a7c38b228b8cb6.html">마이페이지</a>
-        <a href="회원센터 — member/6-4 회원혜택 안내 — member benefit 35534484313681e4881ef59010abec6c.html">회원혜택 안내</a>
-      </div></li>
-      <li><a href="문의·지원 — contact 35534484313681269a21f928bbd26724.html">문의&amp;지원</a><div class="sn-drop">
-        <a href="문의·지원 — contact/7-1 온라인 문의 — contact 35534484313681b9a979d9a2d60e3d81.html">온라인 문의</a>
-        <a href="문의·지원 — contact/7-2 FAQ — contact faq 355344843136817c999debc870fb5fd1.html">자주 묻는 질문</a>
-        <a href="문의·지원 — contact/7-3 오시는 길 — contact location 355344843136810ab0daf5bfd7e3823c.html">오시는 길</a>
-      </div></li>
-    </ul>
-    <a href="교육신청 ⭐ 핵심 — edu/4-3 신청 폼 — edu apply 35534484313681c6a054d1e7fec39a0d.html" class="sn-cta">교육 신청하기</a>
-  </div>
+<div class="nav-container">
+<a href="index.html" class="nav-logo"><img src="images/logo.png" alt="한국안전돌봄협회 로고"><div class="logo-text"><span class="logo-main">한국안전돌봄협회</span><span class="logo-sub">Korea Safe Care Association</span></div></a>
+<div class="nav-menu"><div class="nav-item"><a href="#" class="nav-link">협회소개<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="협회소개 — about/2-1 인사말 — about greeting 35534484313681608185c31cf6f46e84.html">이사장 인사말</a><a href="협회소개 — about/2-2 설립목적·비전 — about vision 355344843136815ab98bd488ba8d25ab.html">설립목적 &amp; 비전</a><a href="협회소개 — about/2-3 조직도·임원 — about org 355344843136817fb973fe2ffe887d58.html">조직도 &amp; 임원</a><a href="협회소개 — about/2-4 연혁·오시는길 — about history 35534484313681ffbdbbe737f9759330.html">연혁 &amp; 오시는 길</a></div></div><div class="nav-item"><a href="#" class="nav-link">사업안내<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="사업안내 — business/3-1 안전교육 사업 — business safety-edu 99c1b0d7ceae4a8bb040977beaf3f53c.html">안전교육 사업</a><a href="사업안내 — business/3-2 돌봄서비스 사업 — business care 35534484313681cf85b8e86450ec1988.html">돌봄서비스 사업</a><a href="사업안내 — business/3-3 컨설팅·자문 — business consulting 3553448431368105aa0df30979273fac.html">컨설팅 &amp; 자문</a><a href="사업안내 — business/3-4 정부·기관 협력 — business partnership 35534484313681fda5e3f74c097e63c4.html">정부·기관 협력</a></div></div><div class="nav-item"><a href="#" class="nav-link">교육신청<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="교육신청 ⭐ 핵심 — edu/4-1 교육과정 목록 — edu list 3553448431368158b62fc7aaf308d533.html">교육과정 목록</a><a href="교육신청 ⭐ 핵심 — edu/4-3 신청 폼 — edu apply 35534484313681c6a054d1e7fec39a0d.html">교육 신청하기</a></div></div><div class="nav-item"><a href="소식·자료 — news/5-1 공지사항 — news notice 35534484313681eca8d4f7d0ccdd99a7.html" class="nav-link">소식·자료<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="소식·자료 — news/5-1 공지사항 — news notice 35534484313681eca8d4f7d0ccdd99a7.html">공지사항</a><a href="소식·자료 — news/5-2 보도자료 — news press 35534484313681d782a4e94d2b1a97a2.html">보도자료</a><a href="소식·자료 — news/5-3 자료실 — resources 35534484313681698474e92642b56d98.html">자료실</a><a href="소식·자료 — news/5-4 포토·영상 — resources media 35534484313681b8931fe425eadbd902.html">포토·영상</a></div></div><div class="nav-item"><a href="#" class="nav-link">회원센터<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="회원센터 — member/6-1 회원가입 — member join 35534484313681388487ca1ce202301b.html">회원가입</a><a href="회원센터 — member/6-2 로그인 — member login 355344843136810da091f774fa0c1938.html">로그인</a><a href="회원센터 — member/6-3 마이페이지 — member mypage 3553448431368117a0a7c38b228b8cb6.html">마이페이지</a><a href="회원센터 — member/6-4 회원혜택 안내 — member benefit 35534484313681e4881ef59010abec6c.html">회원혜택 안내</a></div></div><div class="nav-item"><a href="#" class="nav-link">문의·지원<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="문의·지원 — contact/7-1 온라인 문의 — contact 35534484313681b9a979d9a2d60e3d81.html">온라인 문의</a><a href="문의·지원 — contact/7-2 FAQ — contact faq 355344843136817c999debc870fb5fd1.html">자주 묻는 질문</a><a href="문의·지원 — contact/7-3 오시는 길 — contact location 355344843136810ab0daf5bfd7e3823c.html">오시는 길</a></div></div></div>
+<div class="nav-actions"><a href="교육신청 ⭐ 핵심 — edu/4-3 신청 폼 — edu apply 35534484313681c6a054d1e7fec39a0d.html" class="btn-nav-primary">교육 신청하기</a></div>
+<button class="hamburger" id="nav-hamburger" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+</div>
 <script>
-(function(){/* hover only */})();
+(function(){
+  var btn=document.getElementById('nav-hamburger');
+  var menu=document.querySelector('#site-nav .nav-menu');
+  var actions=document.querySelector('#site-nav .nav-actions');
+  if(btn&&menu){
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();
+      var open=menu.style.display==='flex';
+      menu.style.display=open?'none':'flex';
+      menu.style.flexDirection='column';
+      menu.style.position='absolute';
+      menu.style.top='68px';
+      menu.style.left='0';
+      menu.style.right='0';
+      menu.style.background='#fff';
+      menu.style.padding='12px 16px';
+      menu.style.boxShadow='0 8px 24px rgba(27,58,107,.12)';
+      menu.style.zIndex='999';
+      if(actions) actions.style.display=open?'none':'none';
+    });
+  }
+  var items=document.querySelectorAll('#site-nav .nav-item');
+  items.forEach(function(item){
+    var link=item.querySelector('.nav-link');
+    var dd=item.querySelector('.dropdown');
+    if(!dd)return;
+    link.addEventListener('click',function(e){
+      e.preventDefault();e.stopPropagation();
+      var isOpen=dd.classList.contains('open');
+      document.querySelectorAll('#site-nav .dropdown.open').forEach(function(d){d.classList.remove('open');});
+      document.querySelectorAll('#site-nav .nav-link.dd-open').forEach(function(l){l.classList.remove('dd-open');});
+      if(!isOpen){dd.classList.add('open');link.classList.add('dd-open');}
+    });
+  });
+  document.addEventListener('click',function(){
+    document.querySelectorAll('#site-nav .dropdown.open').forEach(function(d){d.classList.remove('open');});
+    document.querySelectorAll('#site-nav .nav-link.dd-open').forEach(function(l){l.classList.remove('dd-open');});
+    if(window.innerWidth<=900&&menu){menu.style.display='none';}
+  });
+  document.querySelectorAll('#site-nav .dropdown').forEach(function(dd){
+    dd.addEventListener('click',function(e){e.stopPropagation();});
+  });
+})();
 </script>
 </nav><article id="35534484-3136-8168-909b-dacd21b90ad8" class="page sans"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/gradients_8.png" style="object-position:center 70%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">📔</span></div><h1 class="page-title" dir="auto">교육신청 ⭐ 핵심 — /edu</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="d8937f05-6732-47e3-8964-b960ce1d907f" class=""><strong>URL:</strong> <code>/edu</code></p></div><div style="display:contents" dir="auto"><p id="9b8c5870-3240-41dd-9292-f1881db17864" class=""><strong>우선순위:</strong> 🔴 1차 런칭 필수</p></div><div style="display:contents" dir="auto"><hr id="a81fbb6d-a68d-47ba-82b3-bec0edb3fd3d"/></div><div style="display:contents" dir="auto"><h2 id="10665651-99f0-4039-9fbc-6c0d493df18c" class="">하위 페이지</h2></div><div style="display:contents" dir="auto"><ul id="4fdd600c-0799-47df-92a7-f3e680757d2c" class="bulleted-list"><li style="list-style-type:disc"><strong>4-1. 교육과정 목록</strong> — <code>/edu/list</code></li></ul></div><div style="display:contents" dir="auto"><ul id="47c11fe3-14ad-4a77-bcda-8f9bd2db1610" class="bulleted-list"><li style="list-style-type:disc"><strong>4-2. 과정 상세</strong> — <code>/edu/detail/:id</code></li></ul></div><div style="display:contents" dir="auto"><ul id="5398f180-1b0a-409a-a193-81eece91f8a7" class="bulleted-list"><li style="list-style-type:disc"><strong>4-3. 신청 폼</strong> — <code>/edu/apply</code></li></ul></div><div style="display:contents" dir="auto"><ul id="14bf99f1-cc0a-42f6-b33a-9ea5367a595f" class="bulleted-list"><li style="list-style-type:disc"><strong>4-4. 신청 완료·확인</strong> — <code>/edu/confirm</code></li></ul></div><div style="display:contents" dir="ltr"><figure id="35534484-3136-8158-b62f-c7aaf308d533" class="link-to-page"><a href="%EA%B5%90%EC%9C%A1%EC%8B%A0%EC%B2%AD%20%E2%AD%90%20%ED%95%B5%EC%8B%AC%20%E2%80%94%20edu/4-1%20%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95%20%EB%AA%A9%EB%A1%9D%20%E2%80%94%20edu%20list%203553448431368158b62fc7aaf308d533.html"><span class="icon">📚</span>4-1. 교육과정 목록 — /edu/list</a></figure></div><div style="display:contents" dir="ltr"><figure id="35534484-3136-81fc-93ef-dfc19fc4b34b" class="link-to-page"><a href="%EA%B5%90%EC%9C%A1%EC%8B%A0%EC%B2%AD%20%E2%AD%90%20%ED%95%B5%EC%8B%AC%20%E2%80%94%20edu/4-2%20%EA%B3%BC%EC%A0%95%20%EC%83%81%EC%84%B8%20%E2%80%94%20edu%20detail%20id%2035534484313681fc93efdfc19fc4b34b.html"><span class="icon">📝</span>4-2. 과정 상세 — /edu/detail/:id</a></figure></div><div style="display:contents" dir="ltr"><figure id="35534484-3136-81c6-a054-d1e7fec39a0d" class="link-to-page"><a href="%EA%B5%90%EC%9C%A1%EC%8B%A0%EC%B2%AD%20%E2%AD%90%20%ED%95%B5%EC%8B%AC%20%E2%80%94%20edu/4-3%20%EC%8B%A0%EC%B2%AD%20%ED%8F%BC%20%E2%80%94%20edu%20apply%2035534484313681c6a054d1e7fec39a0d.html"><span class="icon">✏️</span>4-3. 신청 폼 — /edu/apply</a></figure></div><div style="display:contents" dir="ltr"><figure id="35534484-3136-81df-9adf-c1529d32aca6" class="link-to-page"><a href="%EA%B5%90%EC%9C%A1%EC%8B%A0%EC%B2%AD%20%E2%AD%90%20%ED%95%B5%EC%8B%AC%20%E2%80%94%20edu/4-4%20%EC%8B%A0%EC%B2%AD%20%EC%99%84%EB%A3%8C%C2%B7%ED%99%95%EC%9D%B8%20%E2%80%94%20edu%20confirm%2035534484313681df9adfc1529d32aca6.html"><span class="icon">✅</span>4-4. 신청 완료·확인 — /edu/confirm</a></figure></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
