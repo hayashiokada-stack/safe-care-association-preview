@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>자주 묻는 질문 | 한국안전돌봄협회</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#1b3a6b;--accent:#1a8a7a;--bg:#f4f7fb;--text:#1a2332;--muted:#5a6a7e;--border:#dde3ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:var(--text);line-height:1.7}
+.page-hero{background:linear-gradient(135deg,#0f2547 0%,#1b3a6b 50%,#1a5a50 100%);padding:72px 24px 60px;text-align:center;position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;top:-50%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(26,138,122,.15),transparent 65%);pointer-events:none}
+.page-tag{display:inline-block;background:rgba(26,138,122,.3);border:1px solid rgba(26,138,122,.5);color:#5dd6c6;font-size:.78rem;font-weight:600;padding:4px 14px;border-radius:20px;margin-bottom:16px}
+.breadcrumb{font-size:.82rem;color:rgba(255,255,255,.6);margin-bottom:12px}
+.breadcrumb a{color:rgba(255,255,255,.7);text-decoration:none}
+.page-hero h1{font-size:2.4rem;font-weight:800;color:#fff;margin-bottom:12px}
+.page-hero .sub{font-size:1rem;color:rgba(255,255,255,.75);max-width:600px;margin:0 auto}
+section{padding:72px 24px}
+section.alt{background:var(--bg)}
+.container{max-width:1100px;margin:0 auto}
+.container.narrow{max-width:780px}
+
+/* 섹션 헤더 */
+.sec-eyebrow{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);margin-bottom:10px;text-align:center}
+.sec-title{font-size:1.9rem;font-weight:900;color:var(--primary);margin-bottom:10px;text-align:center}
+.sec-desc{font-size:.97rem;color:var(--muted);text-align:center;max-width:540px;margin:0 auto 52px;line-height:1.8}
+
+/* FAQ 카드 */
+.faq-list{display:flex;flex-direction:column;gap:0}
+
+.faq-card{border-radius:18px;border:1.5px solid var(--border);overflow:hidden;transition:box-shadow .25s,border-color .25s;margin-bottom:16px}
+.faq-card:last-child{margin-bottom:0}
+.faq-card.open{border-color:var(--accent);box-shadow:0 8px 32px rgba(26,138,122,.12)}
+
+.faq-header{display:flex;align-items:stretch;cursor:pointer;background:#fff;transition:background .15s}
+.faq-header:hover{background:#fafcff}
+
+.faq-icon-col{width:68px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,var(--primary),var(--accent));font-size:1.6rem;padding:24px 0}
+
+.faq-q-col{flex:1;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.faq-q-text{font-size:1.02rem;font-weight:700;color:var(--primary);line-height:1.4}
+.faq-q-sub{font-size:.8rem;color:var(--muted);margin-top:3px;font-weight:400}
+
+.faq-toggle{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .25s}
+.faq-toggle svg{transition:transform .3s}
+.faq-card.open .faq-toggle{background:var(--accent);border-color:var(--accent)}
+.faq-card.open .faq-toggle svg{transform:rotate(45deg)}
+.faq-card.open .faq-toggle svg path{stroke:#fff}
+
+.faq-body{display:none;border-top:1.5px solid var(--border);background:#fff}
+.faq-card.open .faq-body{display:block}
+.faq-body-inner{padding:28px 28px 28px 92px}
+.faq-body-inner p{font-size:.95rem;color:var(--text);line-height:1.9;margin-bottom:12px}
+.faq-body-inner p:last-child{margin-bottom:0}
+.faq-body-inner ul{padding-left:20px;margin:8px 0 12px}
+.faq-body-inner ul li{font-size:.93rem;color:var(--muted);line-height:1.8;margin-bottom:4px}
+.faq-body-inner .highlight{display:inline-block;background:linear-gradient(135deg,rgba(27,58,107,.08),rgba(26,138,122,.08));border:1px solid rgba(26,138,122,.2);border-radius:8px;padding:3px 10px;font-size:.85rem;font-weight:600;color:var(--accent);margin:2px 3px 2px 0}
+.faq-body-inner .link-btn{display:inline-flex;align-items:center;gap:6px;margin-top:14px;padding:9px 18px;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;border-radius:9px;text-decoration:none;font-size:.87rem;font-weight:700;transition:opacity .2s}
+.faq-body-inner .link-btn:hover{opacity:.88}
+
+/* 카테고리 레이블 */
+.faq-cat{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 9px;border-radius:20px;background:#e8f0ff;color:var(--primary);margin-bottom:6px}
+
+/* CTA 박스 */
+.cta-box{margin-top:52px;background:linear-gradient(135deg,rgba(27,58,107,.05),rgba(26,138,122,.05));border:1px solid var(--border);border-radius:20px;padding:36px;text-align:center}
+.cta-box p{font-size:1rem;color:var(--text);margin-bottom:6px;font-weight:500}
+.cta-box .cta-sub{font-size:.88rem;color:var(--muted);margin-bottom:24px}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;padding:12px 28px;border-radius:10px;text-decoration:none;font-weight:700;font-size:.92rem;display:inline-block;transition:all .2s}
+.btn-primary:hover{opacity:.9;transform:translateY(-1px)}
+.btn-outline{background:transparent;color:var(--primary);padding:11px 24px;border-radius:10px;text-decoration:none;font-weight:600;font-size:.9rem;display:inline-block;border:2px solid var(--border);transition:all .2s}
+.btn-outline:hover{border-color:var(--primary);background:#f0f4ff}
+
+@media(max-width:700px){
+  .faq-icon-col{width:52px;font-size:1.3rem}
+  .faq-body-inner{padding:20px 20px 20px 20px}
+  .faq-q-text{font-size:.95rem}
+}
+</style>
+</head>
+<body>
+
+<!-- 네비게이션 -->
+<style>
+#site-nav{position:sticky;top:0;z-index:1000;background:#fff;box-shadow:0 2px 12px rgba(27,58,107,.10);font-family:'Noto Sans KR',sans-serif}
+.nav-container{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;height:68px;gap:32px}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-logo img{height:44px;width:44px;object-fit:contain;flex-shrink:0}
+.logo-text{display:flex;flex-direction:column;line-height:1.2}
+.logo-main{font-size:.95rem;font-weight:700;color:#1b3a6b}
+.logo-sub{font-size:.65rem;color:#1a8a7a;font-weight:500}
+.nav-menu{display:flex;align-items:center;gap:4px;flex:1}
+.nav-item{position:relative}
+.nav-link{display:flex;align-items:center;gap:4px;padding:8px 14px;color:#1a2332;text-decoration:none;font-size:.9rem;font-weight:500;border-radius:8px;transition:all .2s;white-space:nowrap}
+.nav-link:hover,.nav-link.active{color:#1b3a6b;background:#f0f4ff}
+.nav-link svg{transition:transform .2s}
+.nav-link.dd-open svg{transform:rotate(180deg)}
+.dropdown{display:none;position:absolute;top:100%;margin-top:-2px;left:0;background:#fff;border:1px solid #dde3ee;border-radius:12px;padding:8px;padding-top:16px;min-width:200px;box-shadow:0 8px 32px rgba(27,58,107,.12);z-index:200;margin-top:0}
+.dropdown.open{display:block}
+.dropdown a{display:block;padding:8px 14px;color:#1a2332;text-decoration:none;font-size:.88rem;border-radius:8px;transition:all .2s}
+.dropdown a:hover{background:#f0f4ff;color:#1b3a6b}
+.nav-actions{margin-left:auto;flex-shrink:0}
+.btn-nav-primary{background:linear-gradient(135deg,#1b3a6b,#1a8a7a);color:#fff !important;padding:9px 20px;border-radius:8px;text-decoration:none;font-size:.88rem;font-weight:600;transition:opacity .2s}
+.btn-nav-primary:hover{opacity:.9}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px}
+.hamburger span{display:block;width:22px;height:2px;background:#1a2332;margin:5px 0;transition:all .3s}
+@media(min-width:901px){.nav-item:hover .dropdown{display:block}.nav-item:hover>.nav-link{color:#1b3a6b;background:#f0f4ff}}}
+@media(max-width:900px){.nav-menu,.nav-actions{display:none}.hamburger{display:block}}
+</style>
+<nav id="site-nav">
+<div class="nav-container">
+<a href="../index.html" class="nav-logo"><img src="../images/logo.png" alt="한국안전돌봄협회 로고" style="height:44px;width:44px;object-fit:contain;border-radius:0"><div class="logo-text"><span class="logo-main">한국안전돌봄협회</span><span class="logo-sub">Korea Safe Care Association</span></div></a>
+<div class="nav-menu">
+<div class="nav-item"><a href="../협회소개 — about/2-1 인사말 — about greeting 35534484313681608185c31cf6f46e84.html" class="nav-link">협회소개<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="../협회소개 — about/2-1 인사말 — about greeting 35534484313681608185c31cf6f46e84.html">이사장 인사말</a><a href="../협회소개 — about/2-2 설립목적·비전 — about vision 355344843136815ab98bd488ba8d25ab.html">설립목적 &amp; 비전</a><a href="../협회소개 — about/2-3 조직도·임원 — about org 355344843136817fb973fe2ffe887d58.html">조직도 &amp; 임원</a><a href="../협회소개 — about/2-4 연혁·오시는길 — about history 35534484313681ffbdbbe737f9759330.html">연혁 &amp; 오시는 길</a></div></div>
+<div class="nav-item"><a href="../사업안내 — business/3-1 안전교육 사업 — business safety-edu 99c1b0d7ceae4a8bb040977beaf3f53c.html" class="nav-link">사업안내<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="../사업안내 — business/3-1 안전교육 사업 — business safety-edu 99c1b0d7ceae4a8bb040977beaf3f53c.html">안전교육 사업</a><a href="../사업안내 — business/3-2 돌봄서비스 사업 — business care 35534484313681cf85b8e86450ec1988.html">돌봄서비스 사업</a><a href="../사업안내 — business/3-3 컨설팅·자문 — business consulting 3553448431368105aa0df30979273fac.html">컨설팅 &amp; 자문</a><a href="../사업안내 — business/3-4 정부·기관 협력 — business partnership 35534484313681fda5e3f74c097e63c4.html">정부·기관 협력</a></div></div>
+<div class="nav-item"><a href="../교육신청 ⭐ 핵심 — edu/4-1 교육과정 목록 — edu list 3553448431368158b62fc7aaf308d533.html" class="nav-link">교육신청<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="../교육신청 ⭐ 핵심 — edu/4-1 교육과정 목록 — edu list 3553448431368158b62fc7aaf308d533.html">교육과정 목록</a><a href="../교육신청 ⭐ 핵심 — edu/4-3 신청 폼 — edu apply 35534484313681c6a054d1e7fec39a0d.html">교육 신청하기</a></div></div>
+<div class="nav-item"><a href="../소식·자료 — news/5-1 공지사항 — news notice 35534484313681eca8d4f7d0ccdd99a7.html" class="nav-link">소식·자료<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="../소식·자료 — news/5-1 공지사항 — news notice 35534484313681eca8d4f7d0ccdd99a7.html">공지사항</a><a href="../소식·자료 — news/5-2 보도자료 — news press 35534484313681d782a4e94d2b1a97a2.html">보도자료</a><a href="../소식·자료 — news/5-3 자료실 — resources 35534484313681698474e92642b56d98.html">자료실</a></div></div>
+<div class="nav-item"><a href="../문의·지원 — contact/7-1 온라인 문의 — contact 35534484313681b9a979d9a2d60e3d81.html" class="nav-link active">문의·지원<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="./7-1 온라인 문의 — contact 35534484313681b9a979d9a2d60e3d81.html">온라인 문의</a><a href="./7-2 FAQ — contact faq 355344843136817c999debc870fb5fd1.html">자주 묻는 질문</a><a href="./7-3 오시는 길 — contact location 355344843136810ab0daf5bfd7e3823c.html">오시는 길</a></div></div>
+</div>
+<div class="nav-actions"><a href="../교육신청 ⭐ 핵심 — edu/4-3 신청 폼 — edu apply 35534484313681c6a054d1e7fec39a0d.html" class="btn-nav-primary">교육 신청하기</a></div>
+<button class="hamburger" onclick="var m=this.closest('nav').querySelector('.nav-menu');m.style.display=m.style.display==='flex'?'none':'flex'"><span></span><span></span><span></span></button>
+</div>
+<script>
+(function(){
+  var items=document.querySelectorAll('#site-nav .nav-item');
+  items.forEach(function(item){
+    var link=item.querySelector('.nav-link');var dd=item.querySelector('.dropdown');if(!dd)return;
+    link.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();var isOpen=dd.classList.contains('open');document.querySelectorAll('#site-nav .dropdown.open').forEach(function(d){d.classList.remove('open');});document.querySelectorAll('#site-nav .nav-link.dd-open').forEach(function(l){l.classList.remove('dd-open');});if(!isOpen){dd.classList.add('open');link.classList.add('dd-open');}});
+  });
+  document.addEventListener('click',function(){document.querySelectorAll('#site-nav .dropdown.open').forEach(function(d){d.classList.remove('open');});document.querySelectorAll('#site-nav .nav-link.dd-open').forEach(function(l){l.classList.remove('dd-open');});});
+  document.querySelectorAll('#site-nav .dropdown').forEach(function(dd){dd.addEventListener('click',function(e){e.stopPropagation();});});
+})();
+</script>
+</nav>
+
+<!-- 히어로 -->
+<div class="page-hero">
+  <p class="page-tag">문의·지원</p>
+  <div class="breadcrumb"><a href="../index.html">홈</a> › 문의·지원 › 자주 묻는 질문</div>
+  <h1>자주 묻는 질문</h1>
+  <p class="sub">가장 많이 받는 질문과 답변을 모았습니다. 궁금하신 내용을 클릭해 확인해 보세요.</p>
+</div>
+
+<!-- FAQ 본문 -->
+<section>
+<div class="container narrow">
+
+  <p class="sec-eyebrow">FAQ</p>
+  <h2 class="sec-title">무엇이든 물어보세요</h2>
+  <p class="sec-desc">한국안전돌봄협회에서 가장 자주 받는 질문 3가지를 정리했습니다.</p>
+
+  <div class="faq-list">
+
+    <!-- FAQ 1: 교육 신청 -->
+    <div class="faq-card" id="faq1">
+      <div class="faq-header" onclick="toggleFaq('faq1')">
+        <div class="faq-icon-col">📚</div>
+        <div class="faq-q-col">
+          <div>
+            <div class="faq-cat">교육 신청</div>
+            <div class="faq-q-text">교육 신청은 어떻게 하나요?</div>
+            <div class="faq-q-sub">신청 방법, 과정 안내, 출장교육까지</div>
+          </div>
+          <div class="faq-toggle">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M7 2V12M2 7H12" stroke="#5a6a7e" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="faq-body">
+        <div class="faq-body-inner">
+          <p>홈페이지 <strong>교육신청</strong> 메뉴에서 원하시는 과정을 선택한 후 신청서를 작성하시면 됩니다. 신청 완료 후 1~2영업일 내 담당자가 확인 연락을 드립니다.</p>
+          <p>현재 운영 중인 교육과정은 다음과 같습니다.</p>
+          <ul>
+            <li><span class="highlight">노리프트 케어 기초</span> 안전한 이동 보조 기법 실습 중심 교육</li>
+            <li><span class="highlight">안전 이동 보조 실무</span> 이동보조기기 활용 및 현장 적용</li>
+            <li><span class="highlight">X-SCA 인증 준비</span> 안전돌봄 품질 인증 취득 준비 과정</li>
+          </ul>
+          <p>기관·사업장으로 찾아가는 <strong>출장교육</strong>도 운영하고 있으니, 온라인 문의를 통해 인원 및 일정을 알려주시면 맞춤 커리큘럼을 제안드립니다.</p>
+          <a href="../교육신청 ⭐ 핵심 — edu/4-1 교육과정 목록 — edu list 3553448431368158b62fc7aaf308d533.html" class="link-btn">교육과정 보러가기 →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ 2: 노리프트 케어 -->
+    <div class="faq-card" id="faq2">
+      <div class="faq-header" onclick="toggleFaq('faq2')">
+        <div class="faq-icon-col">🤲</div>
+        <div class="faq-q-col">
+          <div>
+            <div class="faq-cat">서비스 안내</div>
+            <div class="faq-q-text">노리프트(No-Lift) 케어가 무엇인가요?</div>
+            <div class="faq-q-sub">어르신 안전과 종사자 부상 예방을 위한 돌봄 방식</div>
+          </div>
+          <div class="faq-toggle">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M7 2V12M2 7H12" stroke="#5a6a7e" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="faq-body">
+        <div class="faq-body-inner">
+          <p><strong>노리프트(No-Lift) 케어</strong>는 요양 종사자가 어르신을 직접 들어올리지 않고, 이동보조기기와 안전한 기법을 활용하여 이동·이송을 지원하는 선진 돌봄 방식입니다.</p>
+          <ul>
+            <li><strong>어르신</strong> — 낙상 위험 감소, 존엄성 있는 케어 경험</li>
+            <li><strong>요양 종사자</strong> — 허리·어깨 등 근골격계 부상 예방</li>
+            <li><strong>기관</strong> — 안전사고 감소, 서비스 품질 향상</li>
+          </ul>
+          <p>한국안전돌봄협회는 노리프트 케어를 중심으로 국내 장기요양기관 및 고령자 돌봄 현장에 안전한 이동 보조 문화를 확산하고 있습니다.</p>
+          <a href="../사업안내 — business/3-2 돌봄서비스 사업 — business care 35534484313681cf85b8e86450ec1988.html" class="link-btn">돌봄서비스 사업 자세히 보기 →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ 3: X-SCA 인증 -->
+    <div class="faq-card" id="faq3">
+      <div class="faq-header" onclick="toggleFaq('faq3')">
+        <div class="faq-icon-col">🏅</div>
+        <div class="faq-q-col">
+          <div>
+            <div class="faq-cat">인증 제도</div>
+            <div class="faq-q-text">X-SCA 인증은 무엇이며 어떤 혜택이 있나요?</div>
+            <div class="faq-q-sub">안전돌봄 전문가·기관 품질 인증 제도</div>
+          </div>
+          <div class="faq-toggle">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M7 2V12M2 7H12" stroke="#5a6a7e" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="faq-body">
+        <div class="faq-body-inner">
+          <p><strong>X-SCA(eXpert Safe Care Advisor)</strong>는 한국안전돌봄협회가 운영하는 안전돌봄 품질 진단·인증 제도입니다. 개인 전문가 인증과 기관 인증 두 트랙으로 운영됩니다.</p>
+          <ul>
+            <li><span class="highlight">Level 1</span> 기초 인증 — 안전돌봄 기본 역량 검증</li>
+            <li><span class="highlight">Level 2</span> 중급 인증 — 현장 실무 적용 능력 평가</li>
+            <li><span class="highlight">Level 3</span> 전문가 인증 — 기관 품질 관리 및 컨설팅 역량</li>
+          </ul>
+          <p>인증 취득 시 협회 공식 인증서 발급, 전문가 DB 등록, 취업·채용 연계 서비스 등의 혜택을 받으실 수 있습니다. 2025년부터 정식 시행 중입니다.</p>
+          <a href="../교육신청 ⭐ 핵심 — edu/4-3 신청 폼 — edu apply 35534484313681c6a054d1e7fec39a0d.html" class="link-btn">X-SCA 인증 신청하기 →</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /faq-list -->
+
+  <!-- CTA -->
+  <div class="cta-box">
+    <p>원하시는 답변을 찾지 못하셨나요?</p>
+    <p class="cta-sub">직접 문의하시면 1~2영업일 내 담당자가 성실히 답변드리겠습니다.</p>
+    <div class="cta-btns">
+      <a href="./7-1 온라인 문의 — contact 35534484313681b9a979d9a2d60e3d81.html" class="btn-primary">✉️ 온라인 문의하기</a>
+      <a href="../교육신청 ⭐ 핵심 — edu/4-1 교육과정 목록 — edu list 3553448431368158b62fc7aaf308d533.html" class="btn-outline">📚 교육과정 보기</a>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<!-- 푸터 -->
+<footer style="background:#0f2547;color:#c8d5e8;font-family:'Noto Sans KR',sans-serif;padding:0">
+<div style="max-width:1200px;margin:0 auto;padding:48px 24px 32px">
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.1)">
+<div><p style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#1a8a7a;margin:0 0 14px">협회소개</p>
+<a href="../협회소개 — about/2-1 인사말 — about greeting 35534484313681608185c31cf6f46e84.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">이사장 인사말</a>
+<a href="../협회소개 — about/2-2 설립목적·비전 — about vision 355344843136815ab98bd488ba8d25ab.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">설립목적 &amp; 비전</a>
+<a href="../협회소개 — about/2-4 연혁·오시는길 — about history 35534484313681ffbdbbe737f9759330.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">연혁 &amp; 오시는 길</a></div>
+<div><p style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#1a8a7a;margin:0 0 14px">사업&amp;교육</p>
+<a href="../사업안내 — business/3-1 안전교육 사업 — business safety-edu 99c1b0d7ceae4a8bb040977beaf3f53c.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">안전교육 사업</a>
+<a href="../사업안내 — business/3-2 돌봄서비스 사업 — business care 35534484313681cf85b8e86450ec1988.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">돌봄서비스 사업</a>
+<a href="../교육신청 ⭐ 핵심 — edu/4-1 교육과정 목록 — edu list 3553448431368158b62fc7aaf308d533.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">교육신청</a></div>
+<div><p style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#1a8a7a;margin:0 0 14px">소식&amp;지원</p>
+<a href="../소식·자료 — news/5-1 공지사항 — news notice 35534484313681eca8d4f7d0ccdd99a7.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">공지사항</a>
+<a href="../소식·자료 — news/5-2 보도자료 — news press 35534484313681d782a4e94d2b1a97a2.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">보도자료</a>
+<a href="./7-1 온라인 문의 — contact 35534484313681b9a979d9a2d60e3d81.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">온라인 문의</a>
+<a href="./7-2 FAQ — contact faq 355344843136817c999debc870fb5fd1.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">자주 묻는 질문</a></div>
+</div>
+<div style="padding-top:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+<div><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><img src="../images/logo.png" alt="로고" style="width:40px;height:40px;object-fit:contain"><span style="font-weight:700;color:#fff;font-size:.95rem">한국안전돌봄협회</span></div><p style="font-size:.8rem;margin:4px 0;color:#8a9bb5">Korea Safe Care Association</p></div>
+<p style="font-size:.78rem;color:#6a7d96">© 2025 한국안전돌봄협회. All rights reserved.</p>
+</div>
+</div>
+</footer>
+
+<script>
+function toggleFaq(id) {
+  const card = document.getElementById(id);
+  const isOpen = card.classList.contains('open');
+  // 모두 닫기
+  document.querySelectorAll('.faq-card.open').forEach(c => c.classList.remove('open'));
+  // 클릭한 것만 토글
+  if (!isOpen) card.classList.add('open');
+}
+</script>
+</body>
+</html>

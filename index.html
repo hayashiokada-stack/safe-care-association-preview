@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>한국안전돌봄협회 — 안전한 돌봄의 기준</title>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --primary:#1b3a6b;--primary-light:#2a5298;--accent:#1a8a7a;--accent-light:#22b09c;
+      --bg:#f4f7fb;--white:#ffffff;--text:#222b3a;--muted:#6b7a93;--border:#dde3ee;
+      --radius:10px;--shadow:0 4px 24px rgba(27,58,107,.10);--nav-h:68px;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;color:var(--text);background:var(--white);line-height:1.6}
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block}
+    .container{max-width:1140px;margin:0 auto;padding:0 24px}
+    .section-title{font-size:2rem;font-weight:700;color:var(--primary);margin-bottom:.4rem}
+    .section-sub{font-size:1rem;color:var(--muted);margin-bottom:2.4rem}
+
+    /* NAV */
+    #nav{position:sticky;top:0;z-index:1000;background:var(--white);border-bottom:1px solid var(--border);box-shadow:0 2px 12px rgba(27,58,107,.07);height:var(--nav-h)}
+    #nav .container{display:flex;align-items:center;height:100%}
+    .nav-logo{display:flex;align-items:center;gap:10px;margin-right:auto}
+    .nav-logo img{height:44px;width:44px;object-fit:contain;flex-shrink:0}
+    .logo-mark{width:40px;height:40px;border-radius:8px;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:white;font-weight:800;letter-spacing:-1px}
+    .nav-logo .logo-text strong{font-size:1rem;font-weight:700;color:var(--primary);display:block}
+    .nav-logo .logo-text span{font-size:.72rem;color:var(--muted)}
+    .nav-menu{display:flex;list-style:none;gap:4px}
+    .nav-menu>li{position:relative}
+    .nav-menu>li>a{display:flex;align-items:center;gap:4px;padding:8px 14px;font-size:.9rem;font-weight:600;color:var(--text);border-radius:var(--radius);transition:background .15s,color .15s;white-space:nowrap}
+    .nav-menu>li>a:hover,.nav-menu>li:hover>a{background:var(--bg);color:var(--primary)}
+    .nav-menu>li>a .arr{font-size:.65rem;opacity:.5;margin-top:1px;transition:transform .2s}
+    .nav-menu>li:hover>a .arr{transform:rotate(180deg)}
+    .dropdown{display:none;position:absolute;top:100%;margin-top:-2px;left:0;min-width:190px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:6px 0;z-index:999}
+.dropdown.open{display:block}
+    .nav-menu>li:hover .dropdown{display:block}
+    .dropdown a{display:block;padding:9px 18px;font-size:.88rem;color:var(--text);transition:background .12s,color .12s}
+    .dropdown a:hover{background:var(--bg);color:var(--accent)}
+    .nav-cta{margin-left:14px;background:var(--accent)!important;color:var(--white)!important;padding:9px 20px!important;border-radius:24px!important;font-weight:700!important;font-size:.88rem!important;transition:background .15s!important;white-space:nowrap}
+    .nav-cta:hover{background:var(--accent-light)!important}
+    .nav-hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:6px;margin-left:12px}
+    .nav-hamburger span{display:block;width:24px;height:2px;background:var(--primary);border-radius:2px;transition:.3s}
+    .nav-mobile-menu{display:none;position:fixed;inset:0;top:var(--nav-h);background:var(--white);overflow-y:auto;padding:16px 0 40px;border-top:1px solid var(--border);z-index:998}
+    .nav-mobile-menu.open{display:block}
+    .nav-mobile-menu a{display:block;padding:12px 28px;font-size:.95rem;border-bottom:1px solid var(--border)}
+    .nav-mobile-menu .m-group-title{padding:16px 28px 6px;font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;border-bottom:none}
+
+    /* HERO SLIDESHOW */
+    #hero{position:relative;height:90vh;min-height:560px;max-height:900px;overflow:hidden;color:#fff}
+    .hero-slider{position:absolute;inset:0;display:flex;transition:none}
+    .hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s cubic-bezier(.4,0,.2,1)}
+    .hero-slide.active{opacity:1;z-index:1}
+    .hero-slide img{width:100%;height:100%;object-fit:cover;object-position:center}
+    .hero-slide::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(10,20,50,.78) 0%,rgba(10,20,50,.55) 50%,rgba(10,20,50,.2) 100%)}
+    .hero-content{position:absolute;inset:0;z-index:10;display:flex;align-items:center;padding:0 6%}
+    .hero-inner{max-width:680px}
+    .hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:24px;padding:6px 18px;font-size:.82rem;margin-bottom:22px;backdrop-filter:blur(8px)}
+    #hero h1{font-size:clamp(2rem,4.5vw,3.2rem);font-weight:900;line-height:1.18;margin-bottom:18px;letter-spacing:-.02em;text-shadow:0 2px 12px rgba(0,0,0,.3)}
+    #hero h1 em{font-style:normal;background:linear-gradient(90deg,#5dd6c6,#a8d8f0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    #hero p{font-size:clamp(.92rem,1.6vw,1.12rem);color:rgba(255,255,255,.88);line-height:1.75;margin-bottom:32px;max-width:560px;text-shadow:0 1px 6px rgba(0,0,0,.3)}
+    .hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+    .hero-slide-caption{position:absolute;bottom:80px;right:5%;z-index:10;background:rgba(255,255,255,.12);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:10px 20px;font-size:.82rem;color:rgba(255,255,255,.9);max-width:320px;text-align:right;display:none}
+    /* Dots */
+    .hero-dots{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:20;display:flex;gap:8px}
+    .hero-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);border:none;cursor:pointer;transition:all .3s;padding:0}
+    .hero-dot.active{background:#fff;width:28px;border-radius:4px}
+    /* Arrows */
+    .hero-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:20;background:rgba(255,255,255,.15);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2);color:#fff;width:48px;height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:all .2s}
+    .hero-arrow:hover{background:rgba(255,255,255,.3);transform:translateY(-50%) scale(1.05)}
+    .hero-arrow.prev{left:24px}
+    .hero-arrow.next{right:24px}
+    /* Progress bar */
+    .hero-progress{position:absolute;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),#5dd6c6);z-index:20;animation:hero-progress-anim 5s linear infinite}
+    @keyframes hero-progress-anim{from{width:0}to{width:100%}}
+    @media(max-width:768px){#hero{height:75vh;min-height:420px}.hero-inner{max-width:100%}.hero-arrow{width:36px;height:36px;font-size:1rem}}
+    
+    /* STATS */
+    #stats{background:var(--white);border-bottom:1px solid var(--border)}
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+    .stat-item{padding:32px 24px;text-align:center;border-right:1px solid var(--border)}
+    .stat-item:last-child{border-right:none}
+    .stat-num{font-size:2.4rem;font-weight:800;color:var(--primary);line-height:1}
+    .stat-num sup{font-size:1.4rem}
+    .stat-label{font-size:.88rem;color:var(--muted);margin-top:6px;font-weight:500}
+
+    /* ABOUT */
+    #about{padding:80px 0;background:var(--bg)}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+    .about-badge{display:inline-block;background:rgba(26,138,122,.12);color:var(--accent);font-size:.8rem;font-weight:700;border-radius:6px;padding:4px 10px;margin-bottom:12px}
+    .about-text h2{font-size:1.9rem;font-weight:800;color:var(--primary);margin-bottom:16px;line-height:1.3}
+    .about-text p{font-size:.97rem;color:#444;line-height:1.85;margin-bottom:14px}
+    .about-values{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+    .value-chip{background:white;border:1px solid var(--border);border-radius:20px;padding:7px 16px;font-size:.85rem;font-weight:600;color:var(--primary)}
+    .about-card{background:var(--white);border-radius:16px;box-shadow:var(--shadow);padding:36px 32px}
+    .about-card .mission-title{font-size:.8rem;font-weight:700;letter-spacing:.08em;color:var(--accent);text-transform:uppercase;margin-bottom:8px}
+    .about-card .mission-text{font-size:1.1rem;font-weight:700;color:var(--primary);line-height:1.5;margin-bottom:24px;border-bottom:1px solid var(--border);padding-bottom:20px}
+    .about-card .vision-title{font-size:.8rem;font-weight:700;letter-spacing:.08em;color:var(--primary-light);text-transform:uppercase;margin-bottom:8px}
+    .about-card .vision-text{font-size:1rem;color:var(--text);line-height:1.6;margin-bottom:20px}
+    .about-cta{display:inline-flex;align-items:center;gap:6px;font-size:.9rem;font-weight:700;color:var(--accent)}
+    .about-cta:hover{text-decoration:underline}
+
+    /* SERVICES */
+    #services{padding:80px 0;background:var(--white)}
+    #services .section-header{text-align:center;margin-bottom:3rem}
+    .services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+    .service-card{background:var(--bg);border-radius:14px;padding:28px 22px;border:1px solid var(--border);transition:box-shadow .2s,transform .2s,border-color .2s}
+    .service-card:hover{box-shadow:var(--shadow);transform:translateY(-3px);border-color:var(--accent)}
+    .service-icon{font-size:2rem;margin-bottom:14px}
+    .service-card h3{font-size:1.05rem;font-weight:700;color:var(--primary);margin-bottom:10px}
+    .service-card p{font-size:.88rem;color:var(--muted);line-height:1.7;margin-bottom:16px}
+    .service-link{font-size:.85rem;font-weight:700;color:var(--accent);display:inline-flex;align-items:center;gap:4px}
+    .service-link:hover{text-decoration:underline}
+
+    /* EDUCATION */
+    #education{padding:80px 0;background:var(--bg)}
+    #education .section-header{text-align:center}
+    .edu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:2.4rem}
+    .edu-card{background:var(--white);border-radius:14px;overflow:hidden;border:1px solid var(--border);transition:box-shadow .2s,transform .2s}
+    .edu-card:hover{box-shadow:var(--shadow);transform:translateY(-3px)}
+    .edu-card-top{padding:24px 24px 16px;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-light) 100%);color:white}
+    .edu-card-top .tag{font-size:.76rem;font-weight:700;background:rgba(255,255,255,.2);border-radius:4px;padding:2px 8px;display:inline-block;margin-bottom:10px}
+    .edu-card-top h3{font-size:1.05rem;font-weight:700;line-height:1.35}
+    .edu-card-body{padding:18px 24px 22px}
+    .edu-card-body p{font-size:.88rem;color:var(--muted);line-height:1.65;margin-bottom:16px}
+    .edu-meta{display:flex;gap:14px;flex-wrap:wrap}
+    .edu-meta span{font-size:.8rem;color:var(--muted);display:flex;align-items:center;gap:4px}
+    .edu-more{display:flex;align-items:center;justify-content:center;margin-top:2.5rem;gap:12px}
+    .btn-secondary{display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:white;padding:13px 28px;border-radius:32px;font-size:.95rem;font-weight:700;transition:background .15s}
+    .btn-secondary:hover{background:var(--primary-light)}
+
+    /* NEWS */
+    #news{padding:80px 0;background:var(--white)}
+    .news-layout{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+    .news-col-title{font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--primary)}
+    .notice-list{list-style:none}
+    .notice-list li{display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)}
+    .notice-list li:last-child{border-bottom:none}
+    .notice-tag{font-size:.75rem;font-weight:700;border-radius:4px;padding:2px 8px;white-space:nowrap;flex-shrink:0;margin-top:2px}
+    .tag-notice{background:#e8f0fe;color:#2a5298}
+    .tag-press{background:#e6f4ea;color:#1a6b30}
+    .tag-edu{background:#fff3e0;color:#b55a00}
+    .notice-list li a{font-size:.93rem;color:var(--text);flex:1;line-height:1.45}
+    .notice-list li a:hover{color:var(--accent);text-decoration:underline}
+    .notice-date{font-size:.8rem;color:var(--muted);white-space:nowrap;margin-top:2px}
+    .news-more{margin-top:16px;display:inline-flex;align-items:center;gap:4px;font-size:.88rem;font-weight:600;color:var(--accent)}
+    .news-more:hover{text-decoration:underline}
+
+    /* CTA */
+    #cta{background:linear-gradient(135deg,var(--accent) 0%,#0e6b5e 100%);padding:64px 0;color:white;text-align:center}
+    #cta h2{font-size:1.9rem;font-weight:800;margin-bottom:12px}
+    #cta p{font-size:1rem;opacity:.88;margin-bottom:30px}
+    .cta-btns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+    .btn-white{background:white;color:var(--accent);padding:13px 28px;border-radius:32px;font-size:.95rem;font-weight:700;display:inline-flex;align-items:center;gap:8px;transition:box-shadow .15s}
+    .btn-white:hover{box-shadow:0 6px 20px rgba(0,0,0,.15)}
+    .btn-outline-white{border:2px solid rgba(255,255,255,.5);color:white;padding:11px 26px;border-radius:32px;font-size:.95rem;font-weight:600;display:inline-flex;align-items:center;gap:8px;transition:border-color .15s,background .15s}
+    .btn-outline-white:hover{border-color:white;background:rgba(255,255,255,.1)}
+
+    /* FOOTER */
+    footer{background:#0f1e35;color:rgba(255,255,255,.7);padding:56px 0 28px}
+    .footer-links{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:32px}.footer-brand-row{display:flex;align-items:flex-start;gap:32px;padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,.1)}.footer-brand-row .footer-brand{flex:1}
+    .footer-brand .f-logo{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+    .footer-brand .f-logo-mark{width:36px;height:36px;background:var(--accent);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:white;font-weight:800}
+    .footer-brand .f-logo-text strong{color:white;font-size:.95rem}
+    .footer-brand p{font-size:.85rem;line-height:1.7;color:rgba(255,255,255,.55);max-width:280px}
+    .footer-brand .f-contact{margin-top:16px;font-size:.82rem;line-height:1.9}
+    .footer-col h4{color:white;font-size:.9rem;font-weight:700;margin-bottom:14px}
+    .footer-col ul{list-style:none}
+    .footer-col ul li{margin-bottom:8px}
+    .footer-col ul li a{font-size:.85rem;color:rgba(255,255,255,.55);transition:color .15s}
+    .footer-col ul li a:hover{color:var(--accent-light)}
+    .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:24px;font-size:.8rem;color:rgba(255,255,255,.35)}
+
+    /* 반응형 */
+    @media(max-width:1024px){.services-grid{grid-template-columns:repeat(2,1fr)}.edu-grid{grid-template-columns:repeat(2,1fr)}.footer-links{grid-template-columns:1fr 1fr}}
+    @media(max-width:768px){.nav-menu,.nav-cta{display:none}.nav-hamburger{display:flex}#hero{padding:72px 0 64px}#hero h1{font-size:1.9rem}.stats-grid{grid-template-columns:repeat(2,1fr)}.stat-item:nth-child(2){border-right:none}.about-grid{grid-template-columns:1fr;gap:32px}.services-grid{grid-template-columns:1fr}.edu-grid{grid-template-columns:1fr}.news-layout{grid-template-columns:1fr}.footer-links{grid-template-columns:1fr}.footer-bottom{flex-direction:column;text-align:center}}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="container">
+    <a href="index.html" class="nav-logo">
+      <img src="images/logo.png" alt="한국안전돌봄협회 로고" style="height:44px;width:44px;object-fit:contain;border-radius:0">
+      <div class="logo-text">
+        <strong>한국안전돌봄협회</strong>
+        <span>Korea Safe Care Association</span>
+      </div>
+    </a>
+    <ul class="nav-menu">
+      <li>
+        <a href="협회소개 — about 3553448431368143bd4adf4b70bc7fc2.html">협회소개 <span class="arr">▾</span></a>
+        <div class="dropdown">
+          <a href="협회소개 — about/2-1 인사말 — about greeting 35534484313681608185c31cf6f46e84.html">이사장 인사말</a>
+          <a href="협회소개 — about/2-2 설립목적·비전 — about vision 355344843136815ab98bd488ba8d25ab.html">설립목적 &amp; 비전</a>
+          <a href="협회소개 — about/2-3 조직도·임원 — about org 355344843136817fb973fe2ffe887d58.html">조직도 &amp; 임원</a>
+          <a href="협회소개 — about/2-4 연혁·오시는길 — about history 35534484313681ffbdbbe737f9759330.html">연혁 &amp; 오시는 길</a>
+        </div>
+      </li>
+      <li>
+        <a href="사업안내 — business 3553448431368175b3e5e739c2c6627b.html">사업안내 <span class="arr">▾</span></a>
+        <div class="dropdown">
+          <a href="사업안내 — business/3-1 안전교육 사업 — business safety-edu 99c1b0d7ceae4a8bb040977beaf3f53c.html">안전교육 사업</a>
+          <a href="사업안내 — business/3-2 돌봄서비스 사업 — business care 35534484313681cf85b8e86450ec1988.html">돌봄서비스 사업</a>
+          <a href="사업안내 — business/3-3 컨설팅·자문 — business consulting 3553448431368105aa0df30979273fac.html">컨설팅 &amp; 자문</a>
+          <a href="사업안내 — business/3-4 정부·기관 협력 — business partnership 35534484313681fda5e3f74c097e63c4.html">정부·기관 협력</a>
+        </div>
+      </li>
+      <li>
+        <a href="교육신청 ⭐ 핵심 — edu 3553448431368168909bdacd21b90ad8.html">교육신청 <span class="arr">▾</span></a>
+        <div class="dropdown">
+          <a href="교육신청 ⭐ 핵심 — edu/4-1 교육과정 목록 — edu list 3553448431368158b62fc7aaf308d533.html">교육과정 목록</a>
+          <a href="교육신청 ⭐ 핵심 — edu/4-3 신청 폼 — edu apply 35534484313681c6a054d1e7fec39a0d.html">교육 신청하기</a>
+          <a href="교육신청 ⭐ 핵심 — edu/4-4 신청 완료·확인 — edu confirm 35534484313681df9adfc1529d32aca6.html">신청 확인</a>
+        </div>
+      </li>
+      <li>
+        <a href="소식·자료 — news 3553448431368177b939df578ff8fb1e.html">소식&amp;자료 <span class="arr">▾</span></a>
+        <div class="dropdown">
+          <a href="소식·자료 — news/5-1 공지사항 — news notice 35534484313681eca8d4f7d0ccdd99a7.html">공지사항</a>
+          <a href="소식·자료 — news/5-2 보도자료 — news press 35534484313681d782a4e94d2b1a97a2.html">보도자료</a>
+          <a href="소식·자료 — news/5-3 자료실 — resources 35534484313681698474e92642b56d98.html">자료실</a>
+          
+        </div>
+      </li>
+      <li>
+        <a href="회원센터 — member 355344843136818c904de881ef0ef060.html">회원센터 <span class="arr">▾</span></a>
+        <div class="dropdown">
+          <a href="회원센터 — member/6-1 회원가입 — member join 35534484313681388487ca1ce202301b.html">회원가입</a>
+          <a href="회원센터 — member/6-2 로그인 — member login 355344843136810da091f774fa0c1938.html">로그인</a>
+          <a href="회원센터 — member/6-3 마이페이지 — member mypage 3553448431368117a0a7c38b228b8cb6.html">마이페이지</a>
+          <a href="회원센터 — member/6-4 회원혜택 안내 — member benefit 35534484313681e4881ef59010abec6c.html">회원혜택 안내</a>
+        </div>
+      </li>
+      <li>
+        <a href="문의·지원 — contact 35534484313681269a21f928bbd26724.html">문의&amp;지원 <span class="arr">▾</span></a>
+        <div class="dropdown">
+          <a href="문의·지원 — contact/7-1 온라인 문의 — contact 35534484313681b9a979d9a2d60e3d81.html">온라인 문의</a>
+          <a href="문의·지원 — contact/7-2 FAQ — contact faq 355344843136817c999debc870fb5fd1.html">자주 묻는 질문</a>
+          <a href="문의·지원 — contact/7-3 오시는 길 — contact location 355344843136810ab0daf5bfd7e3823c.html">오시는 길</a>
+        </div>
+      </li>
+    </ul>
+    <a href="교육신청 ⭐ 핵심 — edu/4-3 신청 폼 — edu apply 35534484313681c6a054d1e7fec39a0d.html" class="nav-cta">교육 신청하기</a>
+    <button class="nav-hamburger" id="hamburgerBtn" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+  </div>
+<script>
+(function(){/* hover only */})();
+</script>
+</nav>
+
+<!-- 모바일 메뉴 -->
+<div class="nav-mobile-menu" id="mobileMenu">
+  <span class="m-group-title">협회소개</span>
+  <a href="협회소개 — about/2-1 인사말 — about greeting 35534484313681608185c31cf6f46e84.html">이사장 인사말</a>
+  <a href="협회소개 — about/2-2 설립목적·비전 — about vision 355344843136815ab98bd488ba8d25ab.html">설립목적 &amp; 비전</a>
+  <a href="협회소개 — about/2-3 조직도·임원 — about org 355344843136817fb973fe2ffe887d58.html">조직도 &amp; 임원</a>
+  <a href="협회소개 — about/2-4 연혁·오시는길 — about history 35534484313681ffbdbbe737f9759330.html">연혁 &amp; 오시는 길</a>
+  <span class="m-group-title">사업안내</span>
+  <a href="사업안내 — business/3-1 안전교육 사업 — business safety-edu 99c1b0d7ceae4a8bb040977beaf3f53c.html">안전교육 사업</a>
+  <a href="사업안내 — business/3-2 돌봄서비스 사업 — business care 35534484313681cf85b8e86450ec1988.html">돌봄서비스 사업</a>
+  <a href="사업안내 — business/3-3 컨설팅·자문 — business consulting 3553448431368105aa0df30979273fac.html">컨설팅 &amp; 자문</a>
+  <a href="사업안내 — business/3-4 정부·기관 협력 — business partnership 35534484313681fda5e3f74c097e63c4.html">정부·기관 협력</a>
+  <span class="m-group-title">교육신청</span>
+  <a href="교육신청 ⭐ 핵심 — edu/4-1 교육과정 목록 — edu list 3553448431368158b62fc7aaf308d533.html">교육과정 목록</a>
+  <a href="교육신청 ⭐ 핵심 — edu/4-3 신청 폼 — edu apply 35534484313681c6a054d1e7fec39a0d.html">교육 신청하기</a>
+  <span class="m-group-title">소식&amp;자료</span>
+  <a href="소식·자료 — news/5-1 공지사항 — news notice 35534484313681eca8d4f7d0ccdd99a7.html">공지사항</a>
+  <a href="소식·자료 — news/5-3 자료실 — resources 35534484313681698474e92642b56d98.html">자료실</a>
+  <span class="m-group-title">회원 / 문의</span>
+  <a href="회원센터 — member/6-1 회원가입 — member join 35534484313681388487ca1ce202301b.html">회원가입</a>
+  <a href="회원센터 — member/6-2 로그인 — member login 355344843136810da091f774fa0c1938.html">로그인</a>
+  <a href="문의·지원 — contact/7-1 온라인 문의 — contact 35534484313681b9a979d9a2d60e3d81.html">온라인 문의</a>
+  <a href="문의·지원 — contact/7-2 FAQ — contact faq 355344843136817c999debc870fb5fd1.html">자주 묻는 질문</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <!-- slides -->
+  <div class="hero-slide active" data-index="0">
+    <img src="images/hero-1.png" alt="보행 보조 · 이동 안전" loading="eager">
+  </div>
+  <div class="hero-slide" data-index="1">
+    <img src="images/hero-2.png" alt="재활 · 기능회복 지원" loading="lazy">
+  </div>
+  <div class="hero-slide" data-index="2">
+    <img src="images/hero-3.png" alt="재가 돌봄 · 일상생활 지원" loading="lazy">
+  </div>
+  <div class="hero-slide" data-index="3">
+    <img src="images/hero-4.png" alt="노리프트 케어 전문 교육" loading="lazy">
+  </div>
+  <div class="hero-slide" data-index="4">
+    <img src="images/hero-5.png" alt="어르신의 존엄과 신뢰" loading="lazy">
+  </div>
+
+  <!-- text overlay -->
+  <div class="hero-content">
+    <div class="hero-inner">
+      <div class="hero-badge"><span>🛡️</span> 노리프트(No-Lift) 케어 전문 협회</div>
+      <h1>안전한 돌봄은<br><em>기술과 기준</em>에서 시작됩니다</h1>
+      <p>한국안전돌봄협회는 어르신의 안전과 존엄, 돌봄 종사자의 건강권을 동시에 지키는 표준 교육·연구·현장 지원 전문 기관입니다.</p>
+      <div class="hero-btns">
+        <a href="교육신청 ⭐ 핵심 — edu/4-1 교육과정 목록 — edu list 3553448431368158b62fc7aaf308d533.html" class="btn-primary">교육과정 보기 →</a>
+        <a href="협회소개 — about/2-1 인사말 — about greeting 35534484313681608185c31cf6f46e84.html" class="btn-outline">협회 소개</a>
+      </div>
+    </div>
+  </div>
+  <!-- arrows -->
+  <button class="hero-arrow prev" aria-label="이전">&#8249;</button>
+  <button class="hero-arrow next" aria-label="다음">&#8250;</button>
+  <!-- dots -->
+  <div class="hero-dots"><button class="hero-dot active" data-dot="0" aria-label="슬라이드 1"></button><button class="hero-dot" data-dot="1" aria-label="슬라이드 2"></button><button class="hero-dot" data-dot="2" aria-label="슬라이드 3"></button><button class="hero-dot" data-dot="3" aria-label="슬라이드 4"></button><button class="hero-dot" data-dot="4" aria-label="슬라이드 5"></button></div>
+  <!-- progress bar -->
+  <div class="hero-progress" id="hero-progress"></div>
+</section>
+<script>
+(function(){
+  var slides = document.querySelectorAll('.hero-slide');
+  var dots   = document.querySelectorAll('.hero-dot');
+  var prog   = document.getElementById('hero-progress');
+  var cur = 0, timer, DELAY = 5000;
+
+  function goTo(n) {
+    slides[cur].classList.remove('active');
+    dots[cur].classList.remove('active');
+    cur = (n + slides.length) % slides.length;
+    slides[cur].classList.add('active');
+    dots[cur].classList.add('active');
+    // restart progress bar
+    if (prog) { prog.style.animation = 'none'; prog.offsetHeight; prog.style.animation = ''; }
+  }
+  function next() { goTo(cur + 1); }
+  function startAuto() { clearInterval(timer); timer = setInterval(next, DELAY); }
+
+  document.querySelector('.hero-arrow.next').addEventListener('click', function() { next(); startAuto(); });
+  document.querySelector('.hero-arrow.prev').addEventListener('click', function() { goTo(cur - 1); startAuto(); });
+  dots.forEach(function(d) {
+    d.addEventListener('click', function() { goTo(+d.dataset.dot); startAuto(); });
+  });
+
+  // pause on hover
+  var hero = document.getElementById('hero');
+  hero.addEventListener('mouseenter', function() { clearInterval(timer); });
+  hero.addEventListener('mouseleave', startAuto);
+
+  startAuto();
+})();
+</script>
+
+
+<!-- STATS -->
+<section id="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item"><div class="stat-num">2,500<sup>+</sup></div><div class="stat-label">누적 교육 수료자</div></div>
+      <div class="stat-item"><div class="stat-num">80<sup>+</sup></div><div class="stat-label">협약 기관 · 기업</div></div>
+      <div class="stat-item"><div class="stat-num">12<sup>개</sup></div><div class="stat-label">표준 교육과정</div></div>
+      <div class="stat-item"><div class="stat-num">17<sup>개</sup></div><div class="stat-label">전국 지역 네트워크</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <span class="about-badge">협회 소개</span>
+        <h2>어르신의 존엄과<br>종사자의 건강권,<br>함께 지킵니다</h2>
+        <p>돌봄 현장에서 반복되는 낙상·사고와 종사자 근골격계 질환 문제를 해결하기 위해, 한국안전돌봄협회는 <strong>노리프트(No-Lift) 원칙</strong>에 기반한 안전 표준을 교육·연구·현장지원으로 확산합니다.</p>
+        <p>재가·시설·통합돌봄 현장 어디서나 바로 적용 가능한 체크리스트, 실습 중심 교육, 강사 양성 프로그램으로 안전한 돌봄이 당연한 상식이 되는 날까지 현장과 함께합니다.</p>
+        <div class="about-values">
+          <span class="value-chip">🛡️ 안전</span>
+          <span class="value-chip">🙏 존엄</span>
+          <span class="value-chip">📚 전문성</span>
+          <span class="value-chip">🔧 현장성</span>
+          <span class="value-chip">🤝 협력</span>
+        </div>
+        <br>
+        <a href="협회소개 — about 3553448431368143bd4adf4b70bc7fc2.html" class="about-cta">협회 더 알아보기 →</a>
+      </div>
+      <div class="about-card">
+        <div class="mission-title">MISSION</div>
+        <div class="mission-text">안전한 돌봄 기술과 기준을 교육·연구·현장지원으로 확산해,<br>어르신의 존엄과 종사자의 건강권을 동시에 지키는 돌봄 환경을 만든다.</div>
+        <div class="vision-title">VISION</div>
+        <div class="vision-text">노리프트 케어를 돌봄 현장의 표준으로 정착시켜,<br>"안전한 돌봄"이 당연한 상식이 되는 사회를 구현한다.</div>
+        <a href="협회소개 — about/2-2 설립목적·비전 — about vision 355344843136815ab98bd488ba8d25ab.html" class="about-cta">설립목적 &amp; 비전 전문 보기 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">주요 사업</h2>
+      <p class="section-sub">현장에서 바로 적용되는 안전 돌봄 솔루션을 제공합니다</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🛡️</div>
+        <h3>안전교육 사업</h3>
+        <p>노리프트·생활안전·직장 내 의무교육까지, 현장 맞춤형 표준 교육과정과 강사 양성을 운영합니다.</p>
+        <a href="사업안내 — business/3-1 안전교육 사업 — business safety-edu 99c1b0d7ceae4a8bb040977beaf3f53c.html" class="service-link">자세히 보기 →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🤝</div>
+        <h3>돌봄서비스 사업</h3>
+        <p>지역사회 통합돌봄 모델 개발, 안전돌봄 품질진단(X-SCA), 취약계층 연계 지원을 수행합니다.</p>
+        <a href="사업안내 — business/3-2 돌봄서비스 사업 — business care 35534484313681cf85b8e86450ec1988.html" class="service-link">자세히 보기 →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💼</div>
+        <h3>컨설팅 &amp; 자문</h3>
+        <p>기관·기업·지자체 대상으로 SOP 구축, 위험요인 분석, 제도·정책 표준 자문을 제공합니다.</p>
+        <a href="사업안내 — business/3-3 컨설팅·자문 — business consulting 3553448431368105aa0df30979273fac.html" class="service-link">자세히 보기 →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏛️</div>
+        <h3>정부·기관 협력</h3>
+        <p>보건복지부·지자체 통합돌봄 정책과 연계해 민관 협력 모델을 제안·실행합니다.</p>
+        <a href="사업안내 — business/3-4 정부·기관 협력 — business partnership 35534484313681fda5e3f74c097e63c4.html" class="service-link">자세히 보기 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION PREVIEW -->
+<section id="education">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">교육과정 안내</h2>
+      <p class="section-sub">돌봄 현장 표준을 위한 실습 중심 교육과정</p>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-card-top">
+          <span class="tag">핵심 과정</span>
+          <h3>노리프트(No-Lift) 안전 돌봄 기초</h3>
+        </div>
+        <div class="edu-card-body">
+          <p>낙상·근골격계 부상 예방을 위한 이동·이송 표준 기술을 체계적으로 습득합니다.</p>
+          <div class="edu-meta"><span>📅 수시 모집</span><span>⏱ 8시간</span><span>👥 현장 종사자</span></div>
+        </div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-card-top" style="background:linear-gradient(135deg,#0e6b5e 0%,var(--accent) 100%)">
+          <span class="tag">강사 양성</span>
+          <h3>안전돌봄 내부강사 양성과정</h3>
+        </div>
+        <div class="edu-card-body">
+          <p>기관 내 안전 교육을 직접 운영할 수 있는 내부강사를 양성하는 심화 과정입니다.</p>
+          <div class="edu-meta"><span>📅 분기별 개설</span><span>⏱ 16시간</span><span>👥 경력 3년 이상</span></div>
+        </div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-card-top" style="background:linear-gradient(135deg,#2a5298 0%,#1b3a6b 100%)">
+          <span class="tag">디지털 돌봄</span>
+          <h3>디지털 돌봄 전문 인력 양성</h3>
+        </div>
+        <div class="edu-card-body">
+          <p>스마트 기기·비식별 센서 기반 디지털 돌봄 역량과 이상 징후 대응 역량을 강화합니다.</p>
+          <div class="edu-meta"><span>📅 수시 모집</span><span>⏱ 12시간</span><span>👥 요양보호사 등</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="edu-more">
+      <a href="교육신청 ⭐ 핵심 — edu/4-1 교육과정 목록 — edu list 3553448431368158b62fc7aaf308d533.html" class="btn-secondary">전체 교육과정 보기</a>
+      <a href="교육신청 ⭐ 핵심 — edu/4-3 신청 폼 — edu apply 35534484313681c6a054d1e7fec39a0d.html" class="btn-primary">지금 신청하기 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section id="news">
+  <div class="container">
+    <div style="margin-bottom:2rem">
+      <h2 class="section-title">소식 &amp; 자료</h2>
+      <p class="section-sub">협회의 최신 공지와 보도 소식을 확인하세요</p>
+    </div>
+    <div class="news-layout">
+      <div>
+        <div class="news-col-title">📢 공지사항</div>
+        <ul class="notice-list">
+          <li><span class="notice-tag tag-notice">공지</span><a href="소식·자료 — news/5-1 공지사항 — news notice 35534484313681eca8d4f7d0ccdd99a7.html">2025년 하반기 노리프트 기초과정 모집 안내</a><span class="notice-date">2025.06</span></li>
+          <li><span class="notice-tag tag-edu">교육</span><a href="교육신청 ⭐ 핵심 — edu/4-1 교육과정 목록 — edu list 3553448431368158b62fc7aaf308d533.html">내부강사 양성과정 3기 모집 (선착순 마감)</a><span class="notice-date">2025.05</span></li>
+          <li><span class="notice-tag tag-notice">공지</span><a href="소식·자료 — news/5-1 공지사항 — news notice 35534484313681eca8d4f7d0ccdd99a7.html">협회 회원 기관 현장 컨설팅 신청 접수 시작</a><span class="notice-date">2025.05</span></li>
+          <li><span class="notice-tag tag-notice">공지</span><a href="소식·자료 — news/5-1 공지사항 — news notice 35534484313681eca8d4f7d0ccdd99a7.html">케어콘테스트 2025 참가기관 모집</a><span class="notice-date">2025.04</span></li>
+        </ul>
+        <a href="소식·자료 — news/5-1 공지사항 — news notice 35534484313681eca8d4f7d0ccdd99a7.html" class="news-more">공지사항 전체 보기 →</a>
+      </div>
+      <div>
+        <div class="news-col-title">📰 보도자료 &amp; 자료실</div>
+        <ul class="notice-list">
+          <li><span class="notice-tag tag-press">보도</span><a href="소식·자료 — news/5-2 보도자료 — news press 35534484313681d782a4e94d2b1a97a2.html">한국안전돌봄협회, 노리프트 케어 표준 가이드라인 발표</a><span class="notice-date">2025.06</span></li>
+          <li><span class="notice-tag tag-press">보도</span><a href="소식·자료 — news/5-2 보도자료 — news press 35534484313681d782a4e94d2b1a97a2.html">돌봄 종사자 근골격계 질환 예방 세미나 개최</a><span class="notice-date">2025.05</span></li>
+          <li><span class="notice-tag tag-press">자료</span><a href="소식·자료 — news/5-3 자료실 — resources 35534484313681698474e92642b56d98.html">2025 안전돌봄 현장 체크리스트 (무료 다운로드)</a><span class="notice-date">2025.04</span></li>
+          <li><span class="notice-tag tag-press">자료</span><a href="소식·자료 — news/5-3 자료실 — resources 35534484313681698474e92642b56d98.html">노리프트 원칙 이해를 위한 입문 가이드</a><span class="notice-date">2025.03</span></li>
+        </ul>
+        <a href="소식·자료 — news 3553448431368177b939df578ff8fb1e.html" class="news-more">자료실 전체 보기 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="container">
+    <h2>지금 바로 교육을 시작하세요</h2>
+    <p>현장에서 바로 적용되는 안전 돌봄 교육 — 개인·기관·기업 모두 신청 가능합니다</p>
+    <div class="cta-btns">
+      <a href="교육신청 ⭐ 핵심 — edu/4-3 신청 폼 — edu apply 35534484313681c6a054d1e7fec39a0d.html" class="btn-white">교육 신청하기 →</a>
+      <a href="문의·지원 — contact/7-1 온라인 문의 — contact 35534484313681b9a979d9a2d60e3d81.html" class="btn-outline-white">출장교육 문의</a>
+      <a href="회원센터 — member/6-1 회원가입 — member join 35534484313681388487ca1ce202301b.html" class="btn-outline-white">회원 가입</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <!-- 링크 컬럼 (상단) -->
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>협회소개</h4>
+        <ul>
+          <li><a href="협회소개 — about/2-1 인사말 — about greeting 35534484313681608185c31cf6f46e84.html">이사장 인사말</a></li>
+          <li><a href="협회소개 — about/2-2 설립목적·비전 — about vision 355344843136815ab98bd488ba8d25ab.html">설립목적 &amp; 비전</a></li>
+          <li><a href="협회소개 — about/2-3 조직도·임원 — about org 355344843136817fb973fe2ffe887d58.html">조직도 &amp; 임원</a></li>
+          <li><a href="협회소개 — about/2-4 연혁·오시는길 — about history 35534484313681ffbdbbe737f9759330.html">연혁 &amp; 오시는 길</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>사업 &amp; 교육</h4>
+        <ul>
+          <li><a href="사업안내 — business/3-1 안전교육 사업 — business safety-edu 99c1b0d7ceae4a8bb040977beaf3f53c.html">안전교육 사업</a></li>
+          <li><a href="사업안내 — business/3-2 돌봄서비스 사업 — business care 35534484313681cf85b8e86450ec1988.html">돌봄서비스 사업</a></li>
+          <li><a href="교육신청 ⭐ 핵심 — edu/4-1 교육과정 목록 — edu list 3553448431368158b62fc7aaf308d533.html">교육과정 목록</a></li>
+          <li><a href="교육신청 ⭐ 핵심 — edu/4-3 신청 폼 — edu apply 35534484313681c6a054d1e7fec39a0d.html">교육 신청하기</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>소식 &amp; 지원</h4>
+        <ul>
+          <li><a href="소식·자료 — news/5-1 공지사항 — news notice 35534484313681eca8d4f7d0ccdd99a7.html">공지사항</a></li>
+          <li><a href="소식·자료 — news/5-3 자료실 — resources 35534484313681698474e92642b56d98.html">자료실</a></li>
+          <li><a href="문의·지원 — contact/7-2 FAQ — contact faq 355344843136817c999debc870fb5fd1.html">자주 묻는 질문</a></li>
+          <li><a href="문의·지원 — contact/7-1 온라인 문의 — contact 35534484313681b9a979d9a2d60e3d81.html">온라인 문의</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- 브랜드 정보 (하단) -->
+    <div class="footer-brand-row">
+      <div class="footer-brand">
+        <div class="f-logo"><div class="f-logo-mark">안</div><div class="f-logo-text"><strong>한국안전돌봄협회</strong></div></div>
+        <p>어르신의 안전과 존엄, 돌봄 종사자의 건강권을 함께 지키는 안전한 돌봄 전문 협회입니다.</p>
+        <div class="f-contact">📍 서울특별시 (주소 업데이트 예정)<br>📞 대표전화: (준비 중)<br>✉️ safecarekorea@gmail.com</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 한국안전돌봄협회. All rights reserved.</span>
+      <span>Korea Safe Care Association | safecarekorea.org</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const btn=document.getElementById('hamburgerBtn');
+const menu=document.getElementById('mobileMenu');
+btn.addEventListener('click',()=>{
+  const open=menu.classList.toggle('open');
+  const spans=btn.querySelectorAll('span');
+  if(open){spans[0].style.transform='rotate(45deg) translate(5px,5px)';spans[1].style.opacity='0';spans[2].style.transform='rotate(-45deg) translate(5px,-5px)'}
+  else{spans.forEach(s=>{s.style.transform='';s.style.opacity=''})}
+});
+menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');btn.querySelectorAll('span').forEach(s=>{s.style.transform='';s.style.opacity=''})}));
+</script>
+</body>
+</html>

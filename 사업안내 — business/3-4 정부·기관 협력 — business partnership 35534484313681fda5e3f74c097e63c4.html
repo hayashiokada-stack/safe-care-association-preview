@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>정부·기관 협력 | 한국안전돌봄협회</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#1b3a6b;--accent:#1a8a7a;--bg:#f4f7fb;--text:#1a2332;--muted:#5a6a7e;--border:#dde3ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:var(--text);line-height:1.7}
+.page-hero{background:linear-gradient(135deg,#0f2547 0%,#1b3a6b 50%,#1a5a50 100%);padding:72px 24px 60px;text-align:center;position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;top:-50%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(26,138,122,.15),transparent 65%);pointer-events:none}
+.page-tag{display:inline-block;background:rgba(26,138,122,.3);border:1px solid rgba(26,138,122,.5);color:#5dd6c6;font-size:.78rem;font-weight:600;padding:4px 14px;border-radius:20px;margin-bottom:16px}
+.breadcrumb{font-size:.82rem;color:rgba(255,255,255,.6);margin-bottom:12px}
+.breadcrumb a{color:rgba(255,255,255,.7);text-decoration:none}
+.page-hero h1{font-size:2.4rem;font-weight:800;color:#fff;margin-bottom:12px}
+.page-hero .sub{font-size:1rem;color:rgba(255,255,255,.75);max-width:600px;margin:0 auto}
+.hero-stats{display:flex;justify-content:center;gap:40px;margin-top:32px;flex-wrap:wrap}
+.hero-stat{text-align:center}
+.hero-stat .num{font-size:1.8rem;font-weight:900;color:#fff}
+.hero-stat .lbl{font-size:.78rem;color:rgba(255,255,255,.6);margin-top:2px}
+section{padding:72px 24px}
+section.alt{background:var(--bg)}
+section.dark{background:linear-gradient(135deg,#0f2547,#1b3a6b);color:#fff}
+.container{max-width:1100px;margin:0 auto}
+.sec-label{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:8px}
+.sec-title{font-size:1.8rem;font-weight:800;color:var(--primary);margin-bottom:12px}
+.sec-title.light{color:#fff}
+.sec-desc{font-size:.97rem;color:var(--muted);max-width:680px;margin-bottom:40px;line-height:1.8}
+.sec-desc.light{color:rgba(255,255,255,.75)}
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.cards-grid.two{grid-template-columns:repeat(2,1fr)}
+.cards-grid.four{grid-template-columns:repeat(4,1fr)}
+.card{background:#fff;border-radius:20px;padding:28px;border:1px solid var(--border);transition:all .25s}
+.card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(27,58,107,.12);border-color:rgba(26,138,122,.3)}
+.card-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:16px}
+.card h3{font-size:1.05rem;font-weight:700;color:var(--primary);margin-bottom:8px}
+.card p{font-size:.88rem;color:var(--muted);line-height:1.6}
+.card ul{list-style:none;margin-top:10px}
+.card ul li{font-size:.85rem;color:var(--muted);padding:3px 0;padding-left:14px;position:relative}
+.card ul li::before{content:'·';position:absolute;left:0;color:var(--accent)}
+.tag{display:inline-block;background:#e8f5f0;color:var(--accent);font-size:.75rem;font-weight:600;padding:3px 10px;border-radius:20px;margin-bottom:10px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:40px;position:relative}
+.steps::before{content:'';position:absolute;top:28px;left:12.5%;right:12.5%;height:2px;background:linear-gradient(90deg,var(--primary),var(--accent));z-index:0}
+.step{text-align:center;padding:0 16px;position:relative;z-index:1}
+.step-num{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;font-size:1.1rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.step h4{font-size:.92rem;font-weight:700;color:var(--primary);margin-bottom:6px}
+.step p{font-size:.82rem;color:var(--muted);line-height:1.5}
+.cta-band{background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:20px;padding:40px;text-align:center;margin-top:40px}
+.cta-band h3{font-size:1.4rem;font-weight:800;color:#fff;margin-bottom:8px}
+.cta-band p{color:rgba(255,255,255,.8);margin-bottom:20px;font-size:.95rem}
+.btn-white{background:#fff;color:var(--primary);padding:12px 28px;border-radius:10px;text-decoration:none;font-weight:700;font-size:.92rem;display:inline-block;transition:all .2s}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.2)}
+@media(max-width:900px){.cards-grid,.cards-grid.two,.cards-grid.four{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.cards-grid,.cards-grid.two,.cards-grid.four,.steps{grid-template-columns:1fr}.page-hero h1{font-size:1.8rem}.hero-stats{gap:24px}}
+</style>
+</head>
+<body>
+<style>
+#site-nav{position:sticky;top:0;z-index:1000;background:#fff;box-shadow:0 2px 12px rgba(27,58,107,.10);font-family:'Noto Sans KR',sans-serif}
+.nav-container{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;height:68px;gap:32px}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-logo img{height:44px;width:44px;object-fit:contain;flex-shrink:0}
+    .logo-mark{width:38px;height:38px;background:linear-gradient(135deg,#1b3a6b,#1a8a7a);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:1.1rem}
+.logo-text{display:flex;flex-direction:column;line-height:1.2}
+.logo-main{font-size:.95rem;font-weight:700;color:#1b3a6b}
+.logo-sub{font-size:.65rem;color:#1a8a7a;font-weight:500}
+.nav-menu{display:flex;align-items:center;gap:4px;flex:1}
+.nav-item{position:relative}
+.nav-link{display:flex;align-items:center;gap:4px;padding:8px 14px;color:#1a2332;text-decoration:none;font-size:.9rem;font-weight:500;border-radius:8px;transition:all .2s;white-space:nowrap}
+.nav-link:hover,.nav-link.active{color:#1b3a6b;background:#f0f4ff}
+.nav-link svg{transition:transform .2s}
+.nav-link.dd-open svg{transform:rotate(180deg)}
+.dropdown{display:none;position:absolute;top:100%;margin-top:-2px;left:0;background:#fff;border:1px solid #dde3ee;border-radius:12px;padding:8px;padding-top:16px;min-width:200px;box-shadow:0 8px 32px rgba(27,58,107,.12);z-index:200;margin-top:0}
+.dropdown.open{display:block}
+.dropdown a{display:block;padding:8px 14px;color:#1a2332;text-decoration:none;font-size:.88rem;border-radius:8px;transition:all .2s}
+.dropdown a:hover{background:#f0f4ff;color:#1b3a6b}
+.nav-actions{margin-left:auto;flex-shrink:0}
+.btn-nav-primary{background:linear-gradient(135deg,#1b3a6b,#1a8a7a);color:#fff !important;padding:9px 20px;border-radius:8px;text-decoration:none;font-size:.88rem;font-weight:600;transition:opacity .2s}
+.btn-nav-primary:hover{opacity:.9}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px}
+.hamburger span{display:block;width:22px;height:2px;background:#1a2332;margin:5px 0;transition:all .3s}
+@media(min-width:901px){.nav-item:hover .dropdown{display:block}.nav-item:hover>.nav-link{color:#1b3a6b;background:#f0f4ff}}}
+@media(max-width:900px){.nav-menu,.nav-actions{display:none}.hamburger{display:block}}
+</style>
+<nav id="site-nav">
+<div class="nav-container">
+<a href="../index.html" class="nav-logo"><img src="../images/logo.png" alt="한국안전돌봄협회 로고" style="height:44px;width:44px;object-fit:contain;border-radius:0"><div class="logo-text"><span class="logo-main">한국안전돌봄협회</span><span class="logo-sub">Korea Safe Care Association</span></div></a>
+<div class="nav-menu">
+<div class="nav-item"><a href="../협회소개 — about/2-1 인사말 — about greeting 35534484313681608185c31cf6f46e84.html" class="nav-link">협회소개<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="../협회소개 — about/2-1 인사말 — about greeting 35534484313681608185c31cf6f46e84.html">이사장 인사말</a><a href="../협회소개 — about/2-2 설립목적·비전 — about vision 355344843136815ab98bd488ba8d25ab.html">설립목적 &amp; 비전</a><a href="../협회소개 — about/2-3 조직도·임원 — about org 355344843136817fb973fe2ffe887d58.html">조직도 &amp; 임원</a><a href="../협회소개 — about/2-4 연혁·오시는길 — about history 35534484313681ffbdbbe737f9759330.html">연혁 &amp; 오시는 길</a></div></div>
+<div class="nav-item"><a href="../사업안내 — business/3-1 안전교육 사업 — business safety-edu 99c1b0d7ceae4a8bb040977beaf3f53c.html" class="nav-link active">사업안내<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="../사업안내 — business/3-1 안전교육 사업 — business safety-edu 99c1b0d7ceae4a8bb040977beaf3f53c.html">안전교육 사업</a><a href="../사업안내 — business/3-2 돌봄서비스 사업 — business care 35534484313681cf85b8e86450ec1988.html">돌봄서비스 사업</a><a href="../사업안내 — business/3-3 컨설팅·자문 — business consulting 3553448431368105aa0df30979273fac.html">컨설팅 &amp; 자문</a><a href="../사업안내 — business/3-4 정부·기관 협력 — business partnership 35534484313681fda5e3f74c097e63c4.html">정부·기관 협력</a></div></div>
+<div class="nav-item"><a href="../교육신청 ⭐ 핵심 — edu/4-1 교육과정 목록 — edu list 3553448431368158b62fc7aaf308d533.html" class="nav-link">교육신청<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="../교육신청 ⭐ 핵심 — edu/">교육과정 목록</a></div></div>
+<div class="nav-item"><a href="../소식·자료 — news/5-1 공지사항 — news notice 35534484313681eca8d4f7d0ccdd99a7.html" class="nav-link">소식·자료<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="../소식·자료 — news/">공지사항</a><a href="../소식·자료 — news/">보도자료</a></div></div>
+<div class="nav-item"><a href="../문의·지원 — contact/7-1 온라인 문의 — contact 35534484313681b9a979d9a2d60e3d81.html" class="nav-link">문의·지원<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="../문의·지원 — contact/">온라인 문의</a><a href="../문의·지원 — contact/">자주 묻는 질문</a></div></div>
+</div>
+<div class="nav-actions"><a href="../교육신청 ⭐ 핵심 — edu/" class="btn-nav-primary">교육 신청하기</a></div>
+<button class="hamburger" onclick="var m=this.closest('nav').querySelector('.nav-menu');m.style.display=m.style.display==='flex'?'none':'flex'"><span></span><span></span><span></span></button>
+</div>
+<script>
+(function(){/* hover only */})();
+</script>
+</nav>
+<div class="page-hero">
+<p class="page-tag">사업안내</p>
+<div class="breadcrumb"><a href="../index.html">홈</a> › <a href="#">사업안내</a> › 정부·기관 협력</div>
+<h1>정부·기관 협력</h1>
+<p class="sub">예산을 달라는 것이 아니라 시스템을 제안합니다. 지자체·공공기관·민간기업과 함께 지속 가능한 돌봄 거버넌스를 구축합니다.</p>
+</div>
+
+<section>
+<div class="container">
+<div class="sec-label">협력 모델</div>
+<h2 class="sec-title">통합돌봄 민관협력 모델</h2>
+<p class="sec-desc">보건복지부·지자체의 지역사회 통합돌봄(커뮤니티 케어) 정책 목표와 연계하여, 현장 공백을 메우는 실행 모델을 제안합니다.</p>
+<div style="background:linear-gradient(135deg,#f8faff,var(--bg));border-radius:24px;padding:40px;border:1px solid var(--border);margin-bottom:40px">
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+<div style="text-align:center;padding:24px;background:#fff;border-radius:16px;border:1px solid var(--border)">
+<div style="font-size:2rem;margin-bottom:12px">🏛️</div>
+<h3 style="font-size:.95rem;color:var(--primary);margin-bottom:8px">정부(지자체)</h3>
+<p style="font-size:.85rem;color:var(--muted)">대상자 발굴·선정<br>공적 서비스 연계</p>
+</div>
+<div style="text-align:center;padding:24px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:16px">
+<div style="font-size:2rem;margin-bottom:12px">🛡️</div>
+<h3 style="font-size:.95rem;color:#fff;margin-bottom:8px">한국안전돌봄협회</h3>
+<p style="font-size:.85rem;color:rgba(255,255,255,.85)">기술 인프라 운영<br>현장 대응 체계 구축</p>
+</div>
+<div style="text-align:center;padding:24px;background:#fff;border-radius:16px;border:1px solid var(--border)">
+<div style="font-size:2rem;margin-bottom:12px">💡</div>
+<h3 style="font-size:.95rem;color:var(--primary);margin-bottom:8px">민간 파트너</h3>
+<p style="font-size:.85rem;color:var(--muted)">Age-tech·장비·솔루션<br>운영 고도화 협력</p>
+</div>
+</div>
+</div>
+<div class="cards-grid">
+<div class="card">
+<div class="card-icon" style="background:#e8f5f0">🏠</div>
+<div class="tag">Aging in Place</div>
+<h3>가정 내 안전한 재가생활 지원</h3>
+<p>가정 내 비식별 센서 기반 안전한 재가생활을 지원하여 시설 입소를 지연하고 재정 부담을 완화합니다. 어르신이 익숙한 환경에서 안전하게 생활할 수 있도록 돕습니다.</p>
+</div>
+<div class="card">
+<div class="card-icon" style="background:#e8f0ff">📡</div>
+<div class="tag">디지털 돌봄</div>
+<h3>디지털 돌봄 고도화</h3>
+<p>24시간 안심케어 솔루션의 표준적 현장 적용을 통해 업무 강도를 감소하고 효율을 향상합니다. 돌봄 종사자의 부담을 줄이면서 서비스 품질을 높입니다.</p>
+</div>
+<div class="card">
+<div class="card-icon" style="background:#fff3e8">🌐</div>
+<div class="tag">거버넌스</div>
+<h3>지역사회 거버넌스 구축</h3>
+<p>지자체–협회–민간기업 협력 체계를 구축하여 지속 가능한 민간 주도 복지 모델을 만듭니다. 지역 특성에 맞는 돌봄 생태계를 함께 설계합니다.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="alt">
+<div class="container">
+<div class="sec-label">협력 강점</div>
+<h2 class="sec-title">협회 협력의 차별점</h2>
+<p class="sec-desc">한국안전돌봄협회와의 협력이 다른 이유를 설명합니다.</p>
+<div class="cards-grid">
+<div class="card" style="border-left:4px solid var(--primary)">
+<div class="card-icon" style="background:#e8f0ff">🔐</div>
+<h3>비식별 기술 기반</h3>
+<p>인권·개인정보 우려를 최소화하는 비식별 센서 기술을 활용합니다. 어르신의 프라이버시를 존중하면서도 안전을 지킵니다.</p>
+</div>
+<div class="card" style="border-left:4px solid var(--accent)">
+<div class="card-icon" style="background:#e8fff6">👥</div>
+<h3>현장 대응 인력 포함</h3>
+<p>장비 설치만이 아닌 안전돌봄지구대까지 포함한 완전한 패키지 모델을 제공합니다. 기술과 사람이 함께하는 안전망입니다.</p>
+</div>
+<div class="card" style="border-left:4px solid #f59e0b">
+<div class="card-icon" style="background:#fff8e8">📊</div>
+<h3>성과 중심 접근</h3>
+<p>예산 요청이 아닌 시스템 제안 방식으로 접근합니다. 측정 가능한 성과지표를 기반으로 협력 효과를 투명하게 공유합니다.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section>
+<div class="container">
+<div class="sec-label">협력 절차</div>
+<h2 class="sec-title">협력 제안 프로세스</h2>
+<div class="steps">
+<div class="step">
+<div class="step-num">1</div>
+<h4>협력 제안 접수</h4>
+<p>온라인 문의 또는 이메일을 통해 협력 의향을 전달해주세요.</p>
+</div>
+<div class="step">
+<div class="step-num">2</div>
+<h4>니즈 파악 미팅</h4>
+<p>기관의 현황과 협력 목표를 파악하기 위한 사전 미팅을 진행합니다.</p>
+</div>
+<div class="step">
+<div class="step-num">3</div>
+<h4>협력 모델 설계</h4>
+<p>맞춤형 협력 모델과 MOU 조건을 함께 설계합니다.</p>
+</div>
+<div class="step">
+<div class="step-num">4</div>
+<h4>협약 체결 및 실행</h4>
+<p>업무협약(MOU) 체결 후 단계적으로 협력 사업을 실행합니다.</p>
+</div>
+</div>
+<div class="cta-band" style="margin-top:48px">
+<h3>협력 제안 및 문의</h3>
+<p>지자체·공공기관·민간기업·NGO 등 다양한 기관과의 협력을 환영합니다.</p>
+<a href="../문의·지원 — contact/" class="btn-white">협력 문의하기</a>
+</div>
+</div>
+</section>
+<footer style="background:#0f2547;color:#c8d5e8;font-family:'Noto Sans KR',sans-serif;padding:0">
+<div style="max-width:1200px;margin:0 auto;padding:48px 24px 32px">
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.1)">
+<div><p style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#1a8a7a;margin:0 0 14px">협회소개</p>
+<a href="../협회소개 — about/2-1 인사말 — about greeting 35534484313681608185c31cf6f46e84.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">이사장 인사말</a>
+<a href="../협회소개 — about/2-2 설립목적·비전 — about vision 355344843136815ab98bd488ba8d25ab.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">설립목적 &amp; 비전</a>
+<a href="../협회소개 — about/2-4 연혁·오시는길 — about history 35534484313681ffbdbbe737f9759330.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">연혁 &amp; 오시는 길</a></div>
+<div><p style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#1a8a7a;margin:0 0 14px">사업&amp;교육</p>
+<a href="../사업안내 — business/3-1 안전교육 사업 — business safety-edu 99c1b0d7ceae4a8bb040977beaf3f53c.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">안전교육 사업</a>
+<a href="../사업안내 — business/3-2 돌봄서비스 사업 — business care 35534484313681cf85b8e86450ec1988.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">돌봄서비스 사업</a>
+<a href="../사업안내 — business/3-3 컨설팅·자문 — business consulting 3553448431368105aa0df30979273fac.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">컨설팅 &amp; 자문</a>
+<a href="../교육신청 ⭐ 핵심 — edu/" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">교육신청</a></div>
+<div><p style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#1a8a7a;margin:0 0 14px">소식&amp;지원</p>
+<a href="../소식·자료 — news/" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">공지사항</a>
+<a href="../소식·자료 — news/" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">보도자료</a>
+<a href="../문의·지원 — contact/" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">온라인 문의</a>
+<a href="../문의·지원 — contact/" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">자주 묻는 질문</a></div>
+</div>
+<div style="padding-top:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+<div><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="width:40px;height:40px;flex-shrink:0"><img src="../images/logo.png" alt="로고" style="width:40px;height:40px;object-fit:contain"></div><span style="font-weight:700;color:#fff;font-size:.95rem">한국안전돌봄협회</span></div><p style="font-size:.8rem;margin:4px 0;color:#8a9bb5">Korea Safe Care Association</p></div>
+<p style="font-size:.78rem;color:#6a7d96">© 2025 한국안전돌봄협회. All rights reserved.</p>
+</div>
+</div>
+</footer>
+</body>
+</html>
