@@ -50,5 +50,42 @@ CREATE OR REPLACE FUNCTION increment_resource_views(rec_id BIGINT)
 RETURNS VOID AS $$ BEGIN UPDATE resources SET views = views + 1 WHERE id = rec_id; END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- Storage 정책 (notice-attachments 버킷 공유)
--- 이미 설정되어 있으면 건너뜀
+-- =====================================================
+-- 첨부파일 Storage 버킷
+-- =====================================================
+-- 공지사항, 보도자료, 자료실이 모두 notice-attachments 버킷을 공유합니다.
+-- "bucket not found" 오류가 발생하면 이 블록이 아직 적용되지 않은 상태입니다.
+INSERT INTO storage.buckets (id, name, public, file_size_limit)
+VALUES ('notice-attachments', 'notice-attachments', TRUE, 10485760)
+ON CONFLICT (id) DO UPDATE
+SET public = TRUE,
+    file_size_limit = 10485760;
+
+DROP POLICY IF EXISTS "Public read notice attachments" ON storage.objects;
+CREATE POLICY "Public read notice attachments"
+ON storage.objects
+FOR SELECT
+TO public
+USING (bucket_id = 'notice-attachments');
+
+DROP POLICY IF EXISTS "Auth users can upload notice attachments" ON storage.objects;
+CREATE POLICY "Auth users can upload notice attachments"
+ON storage.objects
+FOR INSERT
+TO authenticated
+WITH CHECK (bucket_id = 'notice-attachments');
+
+DROP POLICY IF EXISTS "Auth users can update notice attachments" ON storage.objects;
+CREATE POLICY "Auth users can update notice attachments"
+ON storage.objects
+FOR UPDATE
+TO authenticated
+USING (bucket_id = 'notice-attachments')
+WITH CHECK (bucket_id = 'notice-attachments');
+
+DROP POLICY IF EXISTS "Auth users can delete notice attachments" ON storage.objects;
+CREATE POLICY "Auth users can delete notice attachments"
+ON storage.objects
+FOR DELETE
+TO authenticated
+USING (bucket_id = 'notice-attachments');

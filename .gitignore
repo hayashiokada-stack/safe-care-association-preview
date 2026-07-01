@@ -1,0 +1,13 @@
+.vercel
+.claude/
+.omc/
+.playwright-mcp/
+.firebase/
+.DS_Store
+**/.DS_Store
+IMG_2508.JPG
+IMG_3662.jpeg
+IMG_7657.JPG
+회원가입신청서.docx
+회원가입신청서.pdf
+node_modules/

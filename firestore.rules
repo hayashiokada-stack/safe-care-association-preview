@@ -1,0 +1,53 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 교육신청: 누구나 작성, 읽기/수정/삭제는 관리자만
+    match /edu_applications/{docId} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null;
+    }
+
+    // 회원: 가입자는 본인 문서만 생성/조회/수정 가능
+    match /members/{userId} {
+      allow create: if request.auth != null
+        && request.auth.uid == userId
+        && request.resource.data.email == request.auth.token.email
+        && (
+          (request.auth.token.email_verified == false
+            && request.resource.data.status == 'email_verification_pending'
+            && request.resource.data.emailVerified == false)
+          || (request.auth.token.email_verified == true
+            && request.resource.data.status == 'approved'
+            && request.resource.data.emailVerified == true)
+        );
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow update: if request.auth != null
+        && request.auth.uid == userId
+        && request.resource.data.email == resource.data.email
+        && request.resource.data.emailVerified == request.auth.token.email_verified
+        && (
+          (request.auth.token.email_verified == true && request.resource.data.status == 'approved')
+          || (request.auth.token.email_verified == false && request.resource.data.status == 'email_verification_pending')
+        );
+    }
+
+    // 공지사항: 누구나 읽기, 쓰기/수정/삭제는 관리자만
+    match /notices/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // 자료실: 누구나 읽기, 쓰기/수정/삭제는 관리자만
+    match /resources/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // 보도자료: 누구나 읽기, 쓰기/수정/삭제는 관리자만
+    match /press_releases/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}

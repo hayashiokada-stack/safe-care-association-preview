@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>온라인 문의 | 한국안전돌봄협회</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#1b3a6b;--accent:#1a8a7a;--bg:#f4f7fb;--text:#1a2332;--muted:#5a6a7e;--border:#dde3ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:var(--text);line-height:1.7;word-break:keep-all;overflow-wrap:break-word}
+.page-hero{background:linear-gradient(135deg,#0f2547 0%,#1b3a6b 50%,#1a5a50 100%);padding:72px 24px 60px;text-align:center;position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;top:-50%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(26,138,122,.15),transparent 65%);pointer-events:none}
+.page-tag{display:inline-block;background:rgba(26,138,122,.3);border:1px solid rgba(26,138,122,.5);color:#5dd6c6;font-size:.78rem;font-weight:600;padding:4px 14px;border-radius:20px;margin-bottom:16px}
+.breadcrumb{font-size:.82rem;color:rgba(255,255,255,.6);margin-bottom:12px}
+.breadcrumb a{color:rgba(255,255,255,.7);text-decoration:none}
+.page-hero h1{font-size:2.4rem;font-weight:800;color:#fff;margin-bottom:12px}
+.page-hero .sub{font-size:1rem;color:rgba(255,255,255,.75);max-width:600px;margin:0 auto}
+section{padding:56px 24px}
+section.alt{background:var(--bg)}
+.container{max-width:1100px;margin:0 auto}
+.container.narrow{max-width:860px}
+
+/* 탭 */
+.tab-bar{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:36px}
+.tab-btn{padding:12px 28px;font-size:.95rem;font-weight:600;color:var(--muted);background:none;border:none;cursor:pointer;font-family:inherit;position:relative;transition:color .2s}
+.tab-btn::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--primary);transform:scaleX(0);transition:transform .2s}
+.tab-btn.active{color:var(--primary)}
+.tab-btn.active::after{transform:scaleX(1)}
+.tab-btn:hover{color:var(--primary)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* 폼 */
+.form-card{background:#fff;border-radius:20px;padding:36px;border:1px solid var(--border)}
+.form-card h2{font-size:1.1rem;font-weight:800;color:var(--primary);margin-bottom:6px}
+.form-card .form-desc{font-size:.88rem;color:var(--muted);margin-bottom:24px}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:.85rem;font-weight:600;color:var(--text);margin-bottom:6px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:9px;font-size:.9rem;font-family:inherit;color:var(--text);background:#fff;outline:none;transition:border-color .2s;resize:vertical}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.privacy-box{background:var(--bg);border-radius:10px;padding:14px;margin-bottom:20px;font-size:.82rem;color:var(--muted);line-height:1.6}
+.btn-submit{width:100%;padding:15px;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;border:none;border-radius:10px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .2s}
+.btn-submit:hover{opacity:.88}
+
+/* 사이드 카드 */
+.side-info{display:flex;flex-direction:column;gap:16px}
+.info-card{background:#fff;border-radius:18px;padding:24px;border:1px solid var(--border)}
+.info-card h3{font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:14px}
+.info-row{display:flex;flex-direction:column;gap:10px}
+.info-item p.label{font-size:.78rem;color:var(--accent);font-weight:600;margin-bottom:2px}
+.info-item p.val{font-size:.9rem;color:var(--text)}
+.quick-link{display:block;padding:10px 14px;background:var(--bg);border-radius:10px;text-decoration:none;color:var(--text);font-size:.88rem;margin-bottom:8px;font-weight:500;transition:background .15s}
+.quick-link:hover{background:#e8edf8}
+.quick-link:last-child{margin-bottom:0}
+
+/* 게시판 */
+.board-toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px}
+.board-count{font-size:.9rem;color:var(--muted)}
+.board-filter{display:flex;gap:6px;flex-wrap:wrap}
+.filter-btn{padding:5px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:.82rem;font-weight:600;cursor:pointer;color:var(--muted);transition:all .2s;font-family:inherit}
+.filter-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.filter-btn:hover:not(.active){border-color:var(--primary);color:var(--primary)}
+.board-search{display:flex;gap:8px}
+.board-search input{padding:8px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:.88rem;font-family:inherit;color:var(--text);background:#fff;outline:none;width:200px;transition:border-color .2s}
+.board-search input:focus{border-color:var(--accent)}
+.board-search button{padding:8px 16px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:.88rem;font-family:inherit;cursor:pointer;font-weight:600}
+
+.inquiry-table{width:100%;border-collapse:collapse;border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.inquiry-table thead tr{background:var(--bg)}
+.inquiry-table th{padding:12px 16px;font-size:.82rem;font-weight:700;color:var(--muted);text-align:center;border-bottom:1px solid var(--border)}
+.inquiry-table th.left{text-align:left}
+.inquiry-table tbody tr{border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s}
+.inquiry-table tbody tr:last-child{border-bottom:none}
+.inquiry-table tbody tr:hover{background:var(--bg)}
+.inquiry-table td{padding:13px 16px;font-size:.88rem;vertical-align:middle;text-align:center}
+.inquiry-table td.left{text-align:left}
+.inquiry-table td.title-cell a{color:var(--text);text-decoration:none;font-weight:500}
+.inquiry-table td.title-cell a:hover{color:var(--primary)}
+
+/* 상태 배지 */
+.status-badge{display:inline-block;font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:20px}
+.status-badge.waiting{background:#fff3e8;color:#d97706}
+.status-badge.answered{background:#e8f5f0;color:var(--accent)}
+.status-badge.closed{background:#f0f0f0;color:#888}
+
+/* 분류 배지 */
+.cat-badge{display:inline-block;font-size:.75rem;font-weight:600;padding:3px 10px;border-radius:20px;background:#e8f0ff;color:var(--primary)}
+
+/* 상세 뷰 */
+.inquiry-detail{display:none}
+.inquiry-detail.active{display:block}
+.inquiry-list-view.hidden{display:none}
+.detail-header{border-bottom:2px solid var(--primary);padding-bottom:16px;margin-bottom:20px}
+.detail-header h2{font-size:1.2rem;font-weight:700;color:var(--primary);margin-bottom:10px;line-height:1.5}
+.detail-meta{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.detail-meta span{font-size:.83rem;color:var(--muted)}
+.detail-body{font-size:.93rem;line-height:1.9;color:var(--text);min-height:120px;padding:20px 0;border-bottom:1px solid var(--border);word-break:break-word;white-space:pre-wrap}
+.detail-answer{background:linear-gradient(135deg,rgba(27,58,107,.04),rgba(26,138,122,.04));border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:12px;padding:20px;margin-top:20px}
+.detail-answer-head{font-size:.82rem;font-weight:700;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.detail-answer-body{font-size:.9rem;color:var(--text);line-height:1.8;white-space:pre-wrap;word-break:break-word}
+.detail-nav{display:flex;justify-content:space-between;align-items:center;margin-top:20px;flex-wrap:wrap;gap:12px}
+
+/* 관리자 */
+.admin-mode-bar{background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;text-align:center;padding:10px 24px;font-size:.85rem;font-weight:600;display:none;align-items:center;justify-content:center;gap:12px;position:sticky;top:68px;z-index:999}
+.admin-mode-bar.active{display:flex}
+.admin-logout-btn{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);color:#fff;padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit}
+.admin-logout-btn:hover{background:rgba(255,255,255,.35)}
+.admin-access-btn{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:rgba(27,58,107,.07);border:1.5px solid var(--border);color:var(--muted);font-size:1.1rem;cursor:pointer;z-index:500;transition:all .3s;display:flex;align-items:center;justify-content:center}
+.admin-access-btn:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
+.admin-access-btn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.admin-action-btns{display:flex;gap:6px}
+.reply-btn{padding:6px 14px;border-radius:7px;border:1.5px solid var(--accent);background:#fff;color:var(--accent);font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s}
+.reply-btn:hover{background:var(--accent);color:#fff}
+.del-btn{padding:6px 14px;border-radius:7px;border:1.5px solid #dc2626;background:#fff;color:#dc2626;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s}
+.del-btn:hover{background:#dc2626;color:#fff}
+
+/* 모달 */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.55);z-index:2000;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.active{display:flex}
+.modal{background:#fff;border-radius:20px;padding:32px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.18)}
+.modal h3{font-size:1.1rem;font-weight:800;color:var(--primary);margin-bottom:20px}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+.btn-cancel{padding:10px 22px;border-radius:8px;border:1.5px solid var(--border);background:#fff;font-size:.9rem;font-weight:600;cursor:pointer;color:var(--muted);font-family:inherit}
+.btn-save{padding:10px 24px;border-radius:8px;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;font-size:.9rem;font-weight:700;cursor:pointer;border:none;font-family:inherit}
+
+/* 페이지네이션 */
+.pagination{display:flex;justify-content:center;gap:6px;margin-top:20px}
+.page-btn{width:36px;height:36px;border-radius:8px;border:1.5px solid var(--border);background:#fff;cursor:pointer;font-weight:600;font-size:.85rem;color:var(--muted);transition:all .2s;font-family:inherit}
+.page-btn:hover{border-color:var(--primary);color:var(--primary)}
+.page-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+.btn-outline{background:transparent;color:var(--primary);padding:9px 20px;border-radius:10px;font-weight:600;font-size:.88rem;display:inline-block;border:2px solid var(--border);transition:all .2s;cursor:pointer}
+.btn-outline:hover{border-color:var(--primary);background:#f0f4ff}
+
+@media(max-width:900px){
+  .form-layout{grid-template-columns:1fr !important}
+  .side-info{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .form-row{grid-template-columns:1fr}
+  .inquiry-table thead{display:none}
+  .inquiry-table tbody tr{display:block;border-bottom:1px solid var(--border);padding:4px 0}
+  .inquiry-table td{display:block;text-align:left;padding:4px 12px}
+}
+@media(max-width:600px){
+  .side-info{grid-template-columns:1fr}
+  .board-search input{width:140px}
+}
+</style>
+</head>
+<body>
+
+<!-- 관리자 모드 바 -->
+<div class="admin-mode-bar" id="adminModeBar">
+  🔐 관리자 모드 — 문의 답변·삭제가 가능합니다
+  <button class="admin-logout-btn" onclick="adminLogout()">로그아웃</button>
+</div>
+
+<!-- 네비게이션 -->
+<style>
+#site-nav{position:sticky;top:0;z-index:1000;background:#fff;box-shadow:0 2px 12px rgba(27,58,107,.10);font-family:'Noto Sans KR',sans-serif}
+.nav-container{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;height:68px;gap:32px}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-logo img{height:44px;width:44px;object-fit:contain;flex-shrink:0}
+.logo-text{display:flex;flex-direction:column;line-height:1.2}
+.logo-main{font-size:.95rem;font-weight:700;color:#1b3a6b}
+.logo-sub{font-size:.65rem;color:#1a8a7a;font-weight:500}
+.nav-menu{display:flex;align-items:center;gap:4px;flex:1}
+.nav-item{position:relative}
+.nav-link{display:flex;align-items:center;gap:4px;padding:8px 14px;color:#1a2332;text-decoration:none;font-size:.9rem;font-weight:500;border-radius:8px;transition:all .2s;white-space:nowrap}
+.nav-link:hover,.nav-link.active{color:#1b3a6b;background:#f0f4ff}
+.nav-link svg{transition:transform .2s}
+.nav-link.dd-open svg{transform:rotate(180deg)}
+.dropdown{display:none;position:absolute;top:100%;margin-top:-2px;left:0;background:#fff;border:1px solid #dde3ee;border-radius:12px;padding:8px;padding-top:16px;min-width:200px;box-shadow:0 8px 32px rgba(27,58,107,.12);z-index:200;margin-top:0}
+.dropdown.open{display:block}
+.dropdown a{display:block;padding:8px 14px;color:#1a2332;text-decoration:none;font-size:.88rem;border-radius:8px;transition:all .2s}
+.dropdown a:hover{background:#f0f4ff;color:#1b3a6b}
+.nav-actions{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0}
+.btn-nav-primary{background:linear-gradient(135deg,#1b3a6b,#1a8a7a);color:#fff !important;padding:9px 20px;border-radius:8px;text-decoration:none;font-size:.88rem;font-weight:600;transition:opacity .2s}
+.btn-nav-primary:hover{opacity:.9}.btn-nav-primary.secondary{background:#1b3a6b}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px}
+.hamburger span{display:block;width:22px;height:2px;background:#1a2332;margin:5px 0;transition:all .3s}
+@media(min-width:901px){.nav-item:hover .dropdown{display:block}.nav-item:hover>.nav-link{color:#1b3a6b;background:#f0f4ff}}}
+@media(max-width:900px){
+  .nav-menu,.nav-actions{display:none}
+  .hamburger{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px}
+  #site-nav.mobile-open .nav-menu{
+    display:flex!important;
+    flex-direction:column;
+    position:fixed;
+    top:68px;left:0;right:0;
+    background:#fff;
+    padding:8px 0 80px;
+    border-top:2px solid #dde3ee;
+    box-shadow:0 8px 24px rgba(27,58,107,.12);
+    z-index:998;
+    gap:0;
+    align-items:stretch;
+    max-height:calc(100vh - 68px);
+    overflow-y:auto;
+  }
+  #site-nav.mobile-open .nav-actions{
+    display:block!important;
+    position:fixed;
+    bottom:0;left:0;right:0;
+    padding:12px 20px;
+    background:#fff;
+    border-top:1px solid #dde3ee;
+    z-index:999;
+  }
+  #site-nav.mobile-open .btn-nav-primary{display:block;text-align:center;padding:13px}
+  .nav-menu .nav-item{width:100%}
+  .nav-menu .nav-link{padding:13px 24px;border-radius:0;border-bottom:1px solid #f0f4ff;font-size:.97rem}
+  #site-nav.mobile-open .nav-menu .dropdown{
+    display:block!important;
+    position:static;
+    box-shadow:none;
+    border:none;
+    border-radius:0;
+    padding:0;margin:0;
+    background:#f8faff;
+  }
+  #site-nav.mobile-open .nav-menu .dropdown a{
+    padding:10px 24px 10px 40px;
+    font-size:.9rem;
+    border-bottom:1px solid #f0f0f0;
+  }
+  .hamburger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .hamburger.is-open span:nth-child(2){opacity:0}
+  .hamburger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+}
+</style>
+<nav id="site-nav">
+<div class="nav-container">
+<a href="/" class="nav-logo"><img src="../images/logo.png" alt="한국안전돌봄협회 로고" style="height:44px;width:44px;object-fit:contain;border-radius:0"><div class="logo-text"><span class="logo-main">한국안전돌봄협회</span><span class="logo-sub">Korea Safe Care Association</span></div></a>
+<div class="nav-menu"><div class="nav-item"><a href="..//about/greeting.html" class="nav-link ">협회소개<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="..//about/greeting.html">회장 인사말</a><a href="..//about/vision.html">설립목적 &amp; 비전</a><a href="..//about/org.html">조직도</a><a href="..//about/history.html">연혁</a><a href="..//about/location.html">오시는길</a></div></div><div class="nav-item"><a href="..//business/safety-edu.html" class="nav-link ">사업안내<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="..//business/safety-edu.html">안전교육 사업</a><a href="..//business/care.html">돌봄서비스 사업</a><a href="..//business/consulting.html">컨설팅 &amp; 자문</a><a href="..//business/partnership.html">정부·기관 협력</a></div></div><div class="nav-item"><a href="..//edu/list.html" class="nav-link ">교육신청<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="..//edu/list.html">교육과정 목록</a><a href="..//edu/apply.html">교육 신청하기</a><a href="..//edu/confirm.html">신청 확인</a></div></div><div class="nav-item"><a href="..//news/notice.html" class="nav-link ">소식·자료<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="..//news/notice.html">공지사항</a><a href="..//news/press.html">보도자료</a><a href="..//news/resources.html">자료실</a></div></div><div class="nav-item"><a href="..//member/join.html" class="nav-link ">회원센터<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="..//member/join.html">회원가입</a><a href="..//member/login.html">로그인</a><a href="..//member/mypage.html">마이페이지</a><a href="..//member/benefit.html">회원혜택 안내</a></div></div><div class="nav-item"><a href="..//contact/online.html" class="nav-link ">문의·지원<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a><div class="dropdown"><a href="..//contact/online.html">온라인 문의</a><a href="..//contact/faq.html">자주 묻는 질문</a></div></div></div>
+<div class="nav-actions"><a href="..//member/join.html" class="btn-nav-primary">회원가입</a><a href="..//member/login.html" class="btn-nav-primary secondary">로그인</a></div>
+<button class="hamburger" id="hamburgerBtn" onclick="this.classList.toggle('is-open');document.getElementById('site-nav').classList.toggle('mobile-open')"><span></span><span></span><span></span></button>
+</div>
+<script>
+(function(){
+  var items=document.querySelectorAll('#site-nav .nav-item');
+  items.forEach(function(item){
+    var link=item.querySelector('.nav-link');var dd=item.querySelector('.dropdown');if(!dd)return;
+    link.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();var isOpen=dd.classList.contains('open');document.querySelectorAll('#site-nav .dropdown.open').forEach(function(d){d.classList.remove('open');});document.querySelectorAll('#site-nav .nav-link.dd-open').forEach(function(l){l.classList.remove('dd-open');});if(!isOpen){dd.classList.add('open');link.classList.add('dd-open');}});
+  });
+  document.addEventListener('click',function(){document.querySelectorAll('#site-nav .dropdown.open').forEach(function(d){d.classList.remove('open');});document.querySelectorAll('#site-nav .nav-link.dd-open').forEach(function(l){l.classList.remove('dd-open');});});
+  document.querySelectorAll('#site-nav .dropdown').forEach(function(dd){dd.addEventListener('click',function(e){e.stopPropagation();});});
+})();
+</script>
+</nav>
+
+<!-- 히어로 -->
+<div class="page-hero">
+  <p class="page-tag">문의·지원</p>
+  <div class="breadcrumb"><a href="/">홈</a> › 문의·지원 › 온라인 문의</div>
+  <h1>온라인 문의</h1>
+  <p class="sub">교육, 컨설팅, 협력 등 모든 문의를 접수해 드립니다. 1~2영업일 내 답변드리겠습니다.</p>
+</div>
+
+<!-- 본문 -->
+<section>
+<div class="container narrow">
+
+  <!-- 탭 -->
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('write',this)">✏️ 문의 접수</button>
+    <button class="tab-btn" onclick="switchTab('board',this)">📋 문의 내역</button>
+  </div>
+
+  <!-- 탭1: 문의 접수 폼 -->
+  <div class="tab-panel active" id="tab-write">
+    <div style="display:grid;grid-template-columns:1fr 300px;gap:28px;align-items:start" class="form-layout">
+      <div class="form-card">
+        <h2>문의 내용 작성</h2>
+        <p class="form-desc">아래 양식을 작성하신 후 접수하시면 1~2영업일 내 답변드립니다.</p>
+        <div class="form-group">
+          <label>문의 유형 <span style="color:#dc2626">*</span></label>
+          <select id="f-cat" required>
+            <option value="">유형 선택</option>
+            <option>교육 신청 및 안내</option>
+            <option>컨설팅·자문 문의</option>
+            <option>기관 협력·MOU</option>
+            <option>회원 가입</option>
+            <option>자료 요청</option>
+            <option>기타 문의</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>성함 <span style="color:#dc2626">*</span></label><input type="text" id="f-name" placeholder="홍길동"></div>
+          <div class="form-group"><label>연락처 <span style="color:#dc2626">*</span></label><input type="tel" id="f-phone" placeholder="010-0000-0000"></div>
+        </div>
+        <div class="form-group"><label>이메일 <span style="color:#dc2626">*</span></label><input type="email" id="f-email" placeholder="example@email.com"></div>
+        <div class="form-group"><label>소속 기관</label><input type="text" id="f-org" placeholder="소속 기관명 (선택)"></div>
+        <div class="form-group"><label>문의 제목 <span style="color:#dc2626">*</span></label><input type="text" id="f-title" placeholder="문의 제목을 입력해 주세요"></div>
+        <div class="form-group"><label>문의 내용 <span style="color:#dc2626">*</span></label><textarea id="f-content" rows="6" placeholder="문의 내용을 자세히 입력해 주세요."></textarea></div>
+        <div class="privacy-box">입력하신 개인정보는 문의 답변 목적으로만 활용되며, 답변 완료 후 즉시 파기됩니다.</div>
+        <button class="btn-submit" onclick="submitInquiry()">문의 접수하기</button>
+      </div>
+      <div class="side-info">
+        <div class="info-card">
+          <h3>📞 연락처 안내</h3>
+          <div class="info-row">
+            <div class="info-item"><p class="label">이메일</p><p class="val">info@safecarekorea.org</p></div>
+            <div class="info-item"><p class="label">운영시간</p><p class="val">평일 09:00 – 18:00<br>(점심 12:00 – 13:00)</p></div>
+          </div>
+        </div>
+        <div class="info-card">
+          <h3>🔗 바로가기</h3>
+          <a href="..//edu/list.html" class="quick-link">📚 교육과정 보러가기</a>
+          <a href="/contact/faq.html" class="quick-link">❓ 자주 묻는 질문</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 탭2: 문의 게시판 -->
+  <div class="tab-panel" id="tab-board">
+
+    <!-- 목록 뷰 -->
+    <div class="inquiry-list-view" id="inquiryListView">
+      <div class="board-toolbar">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span class="board-count" id="boardCount">총 0건</span>
+          <div class="board-filter">
+            <button class="filter-btn active" onclick="setFilter(this,'전체')">전체</button>
+            <button class="filter-btn" onclick="setFilter(this,'접수중')">접수중</button>
+            <button class="filter-btn" onclick="setFilter(this,'답변완료')">답변완료</button>
+          </div>
+        </div>
+        <div class="board-search">
+          <input type="text" id="searchInput" placeholder="검색어 입력" onkeydown="if(event.key==='Enter')doSearch()">
+          <button onclick="doSearch()">검색</button>
+        </div>
+      </div>
+
+      <table class="inquiry-table" id="inquiryTable">
+        <thead>
+          <tr>
+            <th style="width:48px">번호</th>
+            <th style="width:120px">유형</th>
+            <th class="left">제목</th>
+            <th style="width:80px">작성자</th>
+            <th style="width:106px">접수일</th>
+            <th style="width:90px">상태</th>
+          </tr>
+        </thead>
+        <tbody id="inquiryBody"></tbody>
+      </table>
+      <div class="pagination" id="pagination"></div>
+    </div>
+
+    <!-- 상세 뷰 -->
+    <div class="inquiry-detail" id="inquiryDetailView">
+      <div class="detail-header">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px">
+          <div style="display:flex;gap:8px;align-items:center">
+            <span class="cat-badge" id="detailCat"></span>
+            <span class="status-badge" id="detailStatus"></span>
+          </div>
+          <div class="admin-action-btns" id="adminActionBtns" style="display:none">
+            <button class="reply-btn" onclick="openReplyModal()">💬 답변 등록</button>
+            <button class="del-btn" onclick="deleteCurrentInquiry()">🗑 삭제</button>
+          </div>
+        </div>
+        <h2 id="detailTitle"></h2>
+        <div class="detail-meta">
+          <span id="detailDate"></span>
+          <span id="detailName"></span>
+          <span id="detailOrg"></span>
+        </div>
+      </div>
+      <div class="detail-body" id="detailBody"></div>
+      <div id="detailAnswerWrap"></div>
+      <div class="detail-nav">
+        <div></div>
+        <button class="btn-outline" onclick="showList()">← 목록으로</button>
+      </div>
+    </div>
+
+  </div><!-- /tab-board -->
+</div>
+</section>
+
+<!-- 관리자 접근 버튼 -->
+<button class="admin-access-btn" id="adminAccessBtn" onclick="toggleAdminAccess()" title="관리자 로그인">🔐</button>
+
+<!-- 로그인 모달 -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <h3>🔐 관리자 로그인</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:20px;text-align:center">문의 답변 관리를 위해 비밀번호를 입력하세요.</p>
+    <div class="form-group"><label>비밀번호</label><input type="password" id="adminPwInput" placeholder="비밀번호 입력" onkeydown="if(event.key==='Enter')doAdminLogin()" style="padding:11px 14px;border:1.5px solid var(--border);border-radius:9px;font-size:.9rem;font-family:inherit;width:100%;outline:none"></div>
+    <p style="font-size:.78rem;color:#bbb;text-align:center;margin:-4px 0 8px">관리자 기능은 공개 페이지에서 비활성화되어 있습니다.</p>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('loginModal')">취소</button>
+      <button class="btn-save" onclick="doAdminLogin()">로그인</button>
+    </div>
+  </div>
+</div>
+
+<!-- 답변 모달 -->
+<div class="modal-overlay" id="replyModal">
+  <div class="modal" style="max-width:600px">
+    <h3>💬 답변 등록</h3>
+    <div class="form-group">
+      <label>답변 내용 <span style="color:#dc2626">*</span></label>
+      <textarea id="replyContent" rows="7" placeholder="답변 내용을 입력하세요..." style="padding:11px 14px;border:1.5px solid var(--border);border-radius:9px;font-size:.9rem;font-family:inherit;width:100%;outline:none;resize:vertical;min-height:160px"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('replyModal')">취소</button>
+      <button class="btn-save" onclick="saveReply()">답변 등록</button>
+    </div>
+  </div>
+</div>
+
+<!-- 푸터 -->
+<footer style="background:#0f2547;color:#c8d5e8;font-family:'Noto Sans KR',sans-serif;padding:0">
+<div style="max-width:1200px;margin:0 auto;padding:48px 24px 32px">
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.1)">
+<div><p style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#1a8a7a;margin:0 0 14px">협회소개</p>
+<a href="..//about/greeting.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">회장 인사말</a>
+<a href="..//about/vision.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">설립목적 &amp; 비전</a>
+<a href="..//about/history.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">연혁</a>
+<a href="..//about/location.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">오시는길</a></div>
+<div><p style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#1a8a7a;margin:0 0 14px">사업&amp;교육</p>
+<a href="..//business/safety-edu.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">안전교육 사업</a>
+<a href="..//business/care.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">돌봄서비스 사업</a>
+<a href="..//edu/list.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">교육신청</a></div>
+<div><p style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#1a8a7a;margin:0 0 14px">소식&amp;지원</p>
+<a href="..//news/notice.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">공지사항</a>
+<a href="..//news/press.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">보도자료</a>
+<a href="/contact/online.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">온라인 문의</a>
+<a href="/contact/faq.html" style="display:block;color:#c8d5e8;text-decoration:none;font-size:.88rem;padding:4px 0">자주 묻는 질문</a></div>
+</div>
+<div style="padding-top:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+<div><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><img src="../images/logo.png" alt="로고" style="width:40px;height:40px;object-fit:contain"><span style="font-weight:700;color:#fff;font-size:.95rem">한국안전돌봄협회</span></div><p style="font-size:.8rem;margin:4px 0;color:#8a9bb5">Korea Safe Care Association</p></div>
+<p style="font-size:.78rem;color:#6a7d96">© 2025 한국안전돌봄협회. All rights reserved.</p>
+</div>
+</div>
+</footer>
+
+<script>
+// ===== 설정 =====
+const STORAGE_KEY = 'ksca_inquiries_v1';
+const PAGE_SIZE = 10;
+
+let currentPage = 1;
+let currentFilter = '전체';
+let currentSearch = '';
+let currentId = null;
+let isAdmin = false;
+
+// ===== 탭 전환 =====
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  if (name === 'board') renderList();
+}
+
+// ===== 데이터 =====
+function loadInquiries() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  return raw ? JSON.parse(raw) : [];
+}
+function saveInquiries(arr) { localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }
+function nextId(arr) { return arr.length ? Math.max(...arr.map(n => n.id)) + 1 : 1; }
+function todayStr() { return new Date().toISOString().slice(0, 10); }
+
+// ===== 문의 접수 =====
+function submitInquiry() {
+  const cat = document.getElementById('f-cat').value;
+  const name = document.getElementById('f-name').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const org = document.getElementById('f-org').value.trim();
+  const title = document.getElementById('f-title').value.trim();
+  const content = document.getElementById('f-content').value.trim();
+
+  if (!cat) { alert('문의 유형을 선택해 주세요.'); return; }
+  if (!name) { alert('성함을 입력해 주세요.'); return; }
+  if (!phone) { alert('연락처를 입력해 주세요.'); return; }
+  if (!email) { alert('이메일을 입력해 주세요.'); return; }
+  if (!title) { alert('문의 제목을 입력해 주세요.'); return; }
+  if (!content) { alert('문의 내용을 입력해 주세요.'); return; }
+
+  const arr = loadInquiries();
+  arr.unshift({ id: nextId(arr), cat, name, phone, email, org, title, content, date: todayStr(), status: '접수중', answer: '' });
+  saveInquiries(arr);
+
+  // 폼 초기화
+  ['f-cat','f-name','f-phone','f-email','f-org','f-title','f-content'].forEach(id => {
+    const el = document.getElementById(id);
+    el.tagName === 'SELECT' ? el.selectedIndex = 0 : el.value = '';
+  });
+
+  alert('✅ 문의가 접수되었습니다.\n1~2영업일 내 답변드리겠습니다.\n\n문의 내역 탭에서 접수 현황을 확인하실 수 있습니다.');
+
+  // 문의 내역 탭으로 이동
+  const boardBtn = document.querySelectorAll('.tab-btn')[1];
+  switchTab('board', boardBtn);
+}
+
+// ===== 필터/검색 =====
+function getFiltered() {
+  const all = loadInquiries();
+  return all.filter(n => {
+    const stOk = currentFilter === '전체' || n.status === currentFilter;
+    const q = currentSearch.trim().toLowerCase();
+    const searchOk = !q || n.title.toLowerCase().includes(q) || n.name.toLowerCase().includes(q);
+    return stOk && searchOk;
+  });
+}
+function setFilter(btn, val) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentFilter = val; currentPage = 1; renderList();
+}
+function doSearch() { currentSearch = document.getElementById('searchInput').value; currentPage = 1; renderList(); }
+
+// ===== 목록 렌더링 =====
+function renderList() {
+  const filtered = getFiltered();
+  document.getElementById('boardCount').textContent = '총 ' + filtered.length + '건';
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  if (currentPage > totalPages) currentPage = totalPages;
+  const paged = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
+  const tbody = document.getElementById('inquiryBody');
+  if (paged.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="' + (isAdmin ? 7 : 6) + '" style="text-align:center;padding:56px;color:var(--muted)">접수된 문의가 없습니다.</td></tr>';
+  } else {
+    let num = filtered.length - (currentPage - 1) * PAGE_SIZE;
+    tbody.innerHTML = paged.map(n => {
+      const stCls = n.status === '답변완료' ? 'answered' : 'waiting';
+      const adminTd = isAdmin ? '<td><div style="display:flex;gap:4px;justify-content:center"><button class="reply-btn" onclick="event.stopPropagation();openReplyModalById(' + n.id + ')" style="padding:4px 10px;font-size:.78rem">답변</button><button class="del-btn" onclick="event.stopPropagation();deleteById(' + n.id + ')" style="padding:4px 10px;font-size:.78rem">삭제</button></div></td>' : '';
+      return '<tr onclick="showDetail(' + n.id + ')">' +
+        '<td>' + (num--) + '</td>' +
+        '<td><span class="cat-badge">' + n.cat + '</span></td>' +
+        '<td class="left title-cell"><a href="#" onclick="event.preventDefault();showDetail(' + n.id + ')">' + n.title + '</a></td>' +
+        '<td>' + n.name + '</td>' +
+        '<td>' + n.date + '</td>' +
+        '<td><span class="status-badge ' + stCls + '">' + n.status + '</span></td>' +
+        adminTd + '</tr>';
+    }).join('');
+  }
+
+  // 관리자 컬럼 헤더
+  const thead = document.querySelector('.inquiry-table thead tr');
+  const existTh = thead.querySelector('.admin-th');
+  if (isAdmin && !existTh) { const th = document.createElement('th'); th.className = 'admin-th'; th.style.width = '110px'; th.textContent = '관리'; thead.appendChild(th); }
+  else if (!isAdmin && existTh) { existTh.remove(); }
+
+  renderPagination(totalPages);
+}
+
+function renderPagination(totalPages) {
+  const pg = document.getElementById('pagination');
+  if (totalPages <= 1) { pg.innerHTML = ''; return; }
+  let html = '<button class="page-btn" onclick="changePage(' + (currentPage - 1) + ')"' + (currentPage === 1 ? ' disabled style="opacity:.35"' : '') + '>‹</button>';
+  for (let i = 1; i <= totalPages; i++) html += '<button class="page-btn ' + (i === currentPage ? 'active' : '') + '" onclick="changePage(' + i + ')">' + i + '</button>';
+  html += '<button class="page-btn" onclick="changePage(' + (currentPage + 1) + ')"' + (currentPage === totalPages ? ' disabled style="opacity:.35"' : '') + '>›</button>';
+  pg.innerHTML = html;
+}
+function changePage(p) {
+  const total = Math.max(1, Math.ceil(getFiltered().length / PAGE_SIZE));
+  if (p < 1 || p > total) return;
+  currentPage = p; renderList(); window.scrollTo({ top: 400, behavior: 'smooth' });
+}
+
+// ===== 상세 보기 =====
+function showDetail(id) {
+  const arr = loadInquiries();
+  const n = arr.find(x => x.id === id);
+  if (!n) return;
+  currentId = id;
+
+  const stCls = n.status === '답변완료' ? 'answered' : 'waiting';
+  document.getElementById('detailCat').textContent = n.cat;
+  const stEl = document.getElementById('detailStatus');
+  stEl.className = 'status-badge ' + stCls; stEl.textContent = n.status;
+  document.getElementById('detailTitle').textContent = n.title;
+  document.getElementById('detailDate').textContent = '📅 ' + n.date;
+  document.getElementById('detailName').textContent = '👤 ' + n.name;
+  document.getElementById('detailOrg').textContent = n.org ? '🏢 ' + n.org : '';
+  document.getElementById('detailBody').textContent = n.content;
+
+  // 답변 영역
+  const wrap = document.getElementById('detailAnswerWrap');
+  wrap.innerHTML = n.answer ? '<div class="detail-answer"><div class="detail-answer-head">💬 관리자 답변</div><div class="detail-answer-body">' + escHtml(n.answer) + '</div></div>' : '<div style="margin-top:16px;padding:16px 20px;border-radius:10px;background:var(--bg);font-size:.88rem;color:var(--muted)">아직 답변이 등록되지 않았습니다. 1~2영업일 내 답변드리겠습니다.</div>';
+
+  document.getElementById('adminActionBtns').style.display = isAdmin ? 'flex' : 'none';
+  document.getElementById('inquiryListView').classList.add('hidden');
+  document.getElementById('inquiryDetailView').classList.add('active');
+  window.scrollTo({ top: 300, behavior: 'smooth' });
+}
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>'); }
+function showList() {
+  document.getElementById('inquiryListView').classList.remove('hidden');
+  document.getElementById('inquiryDetailView').classList.remove('active');
+  renderList();
+}
+
+// ===== 관리자 =====
+function toggleAdminAccess() {
+  alert('관리자 기능은 공개 페이지에서 비활성화되어 있습니다. 답변 관리는 서버 인증이 적용된 관리자 페이지에서 처리해야 합니다.');
+}
+function doAdminLogin() {
+  alert('관리자 기능은 공개 페이지에서 비활성화되어 있습니다.');
+}
+function adminLogout() {
+  isAdmin = false;
+  document.getElementById('adminModeBar').classList.remove('active');
+  document.getElementById('adminAccessBtn').classList.remove('on');
+  document.getElementById('adminActionBtns').style.display = 'none';
+  renderList();
+}
+
+// ===== 답변 =====
+function openReplyModal() { openReplyModalById(currentId); }
+function openReplyModalById(id) {
+  const n = loadInquiries().find(x => x.id === id);
+  if (!n) return;
+  currentId = id;
+  document.getElementById('replyContent').value = n.answer || '';
+  document.getElementById('replyModal').classList.add('active');
+  setTimeout(() => document.getElementById('replyContent').focus(), 100);
+}
+function saveReply() {
+  const answer = document.getElementById('replyContent').value.trim();
+  if (!answer) { alert('답변 내용을 입력해 주세요.'); return; }
+  const arr = loadInquiries();
+  const idx = arr.findIndex(x => x.id === currentId);
+  if (idx !== -1) { arr[idx].answer = answer; arr[idx].status = '답변완료'; }
+  saveInquiries(arr);
+  closeModal('replyModal');
+  showDetail(currentId);
+}
+
+// ===== 삭제 =====
+function deleteCurrentInquiry() { deleteById(currentId); }
+function deleteById(id) {
+  if (!confirm('이 문의를 삭제하시겠습니까?')) return;
+  saveInquiries(loadInquiries().filter(x => x.id !== id));
+  if (document.getElementById('inquiryDetailView').classList.contains('active')) showList();
+  else renderList();
+}
+
+// ===== 모달 =====
+function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+document.getElementById('loginModal').addEventListener('click', function(e) { if (e.target === this) closeModal('loginModal'); });
+document.getElementById('replyModal').addEventListener('click', function(e) { if (e.target === this) closeModal('replyModal'); });
+</script>
+<script type="module" src="/member/auth-nav.js"></script>
+</body>
+</html>

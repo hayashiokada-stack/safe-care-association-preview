@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>마이페이지 | 한국안전돌봄협회</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#1b3a6b;--accent:#1a8a7a;--bg:#f4f7fb;--text:#1a2332;--muted:#5a6a7e;--border:#dde3ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;word-break:keep-all;overflow-wrap:break-word}
+.wrap{min-height:100vh;padding:40px 20px}
+.container{max-width:900px;margin:0 auto}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;gap:12px}
+h1{font-size:1.7rem;color:var(--primary)}
+.card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:28px;box-shadow:0 16px 48px rgba(27,58,107,.10)}
+.profile{display:flex;align-items:center;gap:18px;margin-bottom:24px}
+.avatar{width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.7rem;font-weight:800}
+.muted{color:var(--muted);font-size:.9rem}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.box{border:1px solid var(--border);border-radius:14px;padding:18px;background:#fff}
+.box h2{font-size:1rem;color:var(--primary);margin-bottom:8px}
+.btn{border:0;border-radius:10px;padding:11px 18px;background:var(--primary);color:#fff;font-weight:700;cursor:pointer;text-decoration:none}
+.btn.secondary{background:var(--accent)}
+.loading{text-align:center;padding:80px 20px;color:var(--muted)}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<div class="container">
+<div class="top"><h1>마이페이지</h1><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn secondary" href="/">홈으로</a><button id="standaloneLogoutBtn" class="btn" type="button">로그아웃</button></div></div>
+<div id="loading" class="loading">회원 정보를 확인하는 중입니다.</div>
+<section id="mypage" class="card" style="display:none">
+<div class="profile">
+<div id="memberInitial" class="avatar">회</div>
+<div><h2 id="memberNameText">회원명</h2><p id="memberStatusText" class="muted">승인 회원</p></div>
+</div>
+<div class="grid">
+<div class="box"><h2>최근 교육 신청 내역</h2><p class="muted">신청 내역이 없습니다.</p></div>
+<div class="box"><h2>최근 다운로드 내역</h2><p class="muted">다운로드 내역이 없습니다.</p></div>
+</div>
+</section>
+</div>
+</main>
+<script type="module">
+import { getSupabaseClient } from "./supabase-config.js";
+
+let supabase;
+try{
+  supabase=getSupabaseClient();
+}catch(err){
+  supabase=null;
+}
+
+const loading=document.getElementById('loading');
+const mypage=document.getElementById('mypage');
+const loginUrl='/member/login-standalone.html?'+new URLSearchParams({redirect:'/member/mypage-standalone.html'}).toString();
+
+if(!supabase){
+  window.location.href=loginUrl;
+}else{
+  const {data:{session}}=await supabase.auth.getSession();
+  if(!session?.user){
+    window.location.href=loginUrl;
+  }else{
+    const user=session.user;
+    const {data:member}=await supabase
+      .from('members')
+      .select('*')
+      .eq('id',user.id)
+      .maybeSingle();
+    await supabase.from('members').update({status:'approved'}).eq('id',user.id);
+    const meta=user.user_metadata||{};
+    const name=member?.name||meta.name||user.email||'회원';
+    document.getElementById('memberNameText').textContent=name;
+    document.getElementById('memberInitial').textContent=name.trim().charAt(0)||'회';
+    loading.style.display='none';
+    mypage.style.display='block';
+    document.getElementById('standaloneLogoutBtn')?.addEventListener('click',async()=>{
+      await supabase.auth.signOut();
+      window.location.href='/';
+    });
+  }
+}
+</script>
+</body>
+</html>
