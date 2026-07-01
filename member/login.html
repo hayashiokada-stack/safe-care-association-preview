@@ -237,7 +237,7 @@ form.addEventListener('submit',async(e)=>{
     const errorText=(err?.message||'').toLowerCase();
     let message='로그인에 실패했습니다. 이메일과 비밀번호를 확인해 주세요.';
     if(err?.message==='supabase-not-configured')message='Supabase 연결 정보가 아직 입력되지 않았습니다. member/supabase-config.js를 먼저 설정해 주세요.';
-    else if(errorText.includes('email not confirmed'))message='Supabase에서 이메일 인증 설정이 켜져 있습니다. Authentication > Sign In / Providers > Email에서 Confirm email을 끈 뒤 다시 로그인해 주세요.';
+    else if(errorText.includes('email not confirmed'))message='아직 이메일 인증이 완료되지 않았습니다. 가입하실 때 입력하신 이메일함에서 인증 링크를 확인해 주세요.';
     else if(errorText.includes('invalid login'))message='이메일 또는 비밀번호가 올바르지 않습니다.';
     else if(errorText.includes('invalid email'))message='이메일 형식이 올바르지 않습니다.';
     else if(errorText.includes('rate limit')||errorText.includes('too many'))message='로그인 시도가 많습니다. 잠시 후 다시 시도해 주세요.';
