@@ -3,17 +3,20 @@ service firebase.storage {
   match /b/{bucket}/o {
     match /notices/{fileName=**} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if request.auth != null
+        && request.auth.token.email == 'hayashi.okada@gmail.com';
     }
 
     match /resources/{fileName=**} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if request.auth != null
+        && request.auth.token.email == 'hayashi.okada@gmail.com';
     }
 
     match /press_releases/{fileName=**} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if request.auth != null
+        && request.auth.token.email == 'hayashi.okada@gmail.com';
     }
   }
 }

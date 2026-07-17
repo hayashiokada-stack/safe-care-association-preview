@@ -35,19 +35,22 @@ service cloud.firestore {
     // 공지사항: 누구나 읽기, 쓰기/수정/삭제는 관리자만
     match /notices/{docId} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if request.auth != null
+        && request.auth.token.email == 'hayashi.okada@gmail.com';
     }
 
     // 자료실: 누구나 읽기, 쓰기/수정/삭제는 관리자만
     match /resources/{docId} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if request.auth != null
+        && request.auth.token.email == 'hayashi.okada@gmail.com';
     }
 
     // 보도자료: 누구나 읽기, 쓰기/수정/삭제는 관리자만
     match /press_releases/{docId} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if request.auth != null
+        && request.auth.token.email == 'hayashi.okada@gmail.com';
     }
   }
 }

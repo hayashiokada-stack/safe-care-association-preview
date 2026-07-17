@@ -170,27 +170,37 @@ label{display:block;font-size:.85rem;font-weight:600;color:var(--text);margin-bo
 <div id="loginMessage" style="display:none;border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:.86rem"></div>
 <button id="loginSubmitBtn" type="submit" class="btn-primary" style="width:100%;padding:15px;font-size:.95rem;margin-bottom:16px">로그인</button>
 <div style="display:flex;justify-content:space-between;font-size:.85rem">
-<a href="#" style="color:var(--muted);text-decoration:none">비밀번호 찾기</a>
+<a href="#" id="resetPasswordLink" style="color:var(--muted);text-decoration:none">비밀번호 찾기</a>
 <a href="/member/join.html" style="color:var(--accent);font-weight:600;text-decoration:none">회원가입</a>
 </div>
+</form>
+<form id="resetPasswordForm" style="display:none;background:#fff;border-radius:20px;padding:40px;border:1px solid var(--border)">
+<div style="text-align:center;margin-bottom:28px">
+<div style="width:56px;height:56px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;color:#fff;font-size:1.5rem">✉</div>
+<h2 style="font-size:1.2rem;font-weight:800;color:var(--primary);margin-bottom:8px">비밀번호 찾기</h2>
+<p style="font-size:.86rem;color:var(--muted)">가입한 이메일로 비밀번호 재설정 링크를 보내드립니다.</p>
+</div>
+<div class="form-group"><label>가입 이메일</label><input id="resetEmail" type="email" placeholder="example@email.com" autocomplete="email" required></div>
+<div id="resetMessage" style="display:none;border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:.86rem"></div>
+<button id="resetSubmitBtn" type="submit" class="btn-primary" style="width:100%;padding:15px;font-size:.95rem;margin-bottom:16px">재설정 메일 보내기</button>
+<button id="backToLoginBtn" type="button" class="btn-outline" style="width:100%;cursor:pointer">로그인으로 돌아가기</button>
 </form>
 </div>
 </section>
 <script type="module">
-import { getSupabaseClient } from "./supabase-config.js";
-
-let supabase;
-try{
-  supabase=getSupabaseClient();
-}catch(err){
-  supabase=null;
-}
+import { auth,db } from "./firebase-config.js?v=20260717-2";
+import { signInWithEmailAndPassword,sendPasswordResetEmail,signOut,onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { doc,getDoc,setDoc,serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 const form=document.getElementById('loginForm');
 const emailInput=document.getElementById('loginEmail');
 const passwordInput=document.getElementById('loginPassword');
 const btn=document.getElementById('loginSubmitBtn');
 const msg=document.getElementById('loginMessage');
+const resetForm=document.getElementById('resetPasswordForm');
+const resetEmail=document.getElementById('resetEmail');
+const resetMsg=document.getElementById('resetMessage');
+const resetBtn=document.getElementById('resetSubmitBtn');
 
 function showMessage(text,type='error'){
   msg.textContent=text;
@@ -207,16 +217,19 @@ function loginTarget(){
 const pageParams=new URLSearchParams(window.location.search);
 if(pageParams.get('verified')){
   showMessage('가입 신청이 확인되었습니다. 로그인해 주세요.','success');
+}else if(pageParams.get('passwordReset')==='complete'){
+  showMessage('비밀번호가 재설정되었습니다. 새 비밀번호로 로그인해 주세요.','success');
 }else if(pageParams.get('verifyRequired')){
   showMessage('로그인 후 마이페이지를 이용할 수 있습니다.');
 }
 
-if(supabase){
-  const {data:{session}}=await supabase.auth.getSession();
-  if(session?.user){
-    window.location.href=loginTarget();
+let authReady=false;
+onAuthStateChanged(auth,(user)=>{
+  if(!authReady){
+    authReady=true;
+    if(user?.emailVerified)window.location.href=loginTarget();
   }
-}
+});
 
 form.addEventListener('submit',async(e)=>{
   e.preventDefault();
@@ -224,27 +237,67 @@ form.addEventListener('submit',async(e)=>{
   btn.disabled=true;
   btn.textContent='로그인 중...';
   try{
-    if(!supabase)throw new Error('supabase-not-configured');
-    const {data,error}=await supabase.auth.signInWithPassword({
-      email:emailInput.value.trim().toLowerCase(),
-      password:passwordInput.value
-    });
-    if(error)throw error;
-    await supabase.from('members').update({status:'approved'}).eq('id',data.user.id);
+    const credential=await signInWithEmailAndPassword(auth,emailInput.value.trim().toLowerCase(),passwordInput.value);
+    const user=credential.user;
+    if(!user.emailVerified){
+      await signOut(auth);
+      throw new Error('email-not-verified');
+    }
+    const memberRef=doc(db,'members',user.uid);
+    const memberSnap=await getDoc(memberRef);
+    await setDoc(memberRef,{
+      email:user.email,
+      emailVerified:true,
+      status:'approved',
+      updatedAt:serverTimestamp(),
+      ...(memberSnap.exists()?{}:{name:user.displayName||user.email})
+    },{merge:true});
     showMessage('로그인되었습니다.','success');
     window.location.href=loginTarget();
   }catch(err){
     const errorText=(err?.message||'').toLowerCase();
     let message='로그인에 실패했습니다. 이메일과 비밀번호를 확인해 주세요.';
-    if(err?.message==='supabase-not-configured')message='Supabase 연결 정보가 아직 입력되지 않았습니다. member/supabase-config.js를 먼저 설정해 주세요.';
-    else if(errorText.includes('email not confirmed'))message='아직 이메일 인증이 완료되지 않았습니다. 가입하실 때 입력하신 이메일함에서 인증 링크를 확인해 주세요.';
-    else if(errorText.includes('invalid login'))message='이메일 또는 비밀번호가 올바르지 않습니다.';
-    else if(errorText.includes('invalid email'))message='이메일 형식이 올바르지 않습니다.';
-    else if(errorText.includes('rate limit')||errorText.includes('too many'))message='로그인 시도가 많습니다. 잠시 후 다시 시도해 주세요.';
+    if(errorText.includes('email-not-verified'))message='아직 이메일 인증이 완료되지 않았습니다. 가입 이메일의 인증 링크를 확인해 주세요.';
+    else if(errorText.includes('invalid-credential')||errorText.includes('wrong-password')||errorText.includes('user-not-found'))message='이메일 또는 비밀번호가 올바르지 않습니다.';
+    else if(errorText.includes('invalid-email'))message='이메일 형식이 올바르지 않습니다.';
+    else if(errorText.includes('too-many-requests'))message='로그인 시도가 많습니다. 잠시 후 다시 시도해 주세요.';
     showMessage(message);
   }finally{
     btn.disabled=false;
     btn.textContent='로그인';
+  }
+});
+
+document.getElementById('resetPasswordLink').addEventListener('click',(e)=>{
+  e.preventDefault();
+  resetEmail.value=emailInput.value.trim();
+  form.style.display='none';
+  resetForm.style.display='block';
+  resetEmail.focus();
+});
+
+document.getElementById('backToLoginBtn').addEventListener('click',()=>{
+  resetForm.style.display='none';
+  form.style.display='block';
+  emailInput.focus();
+});
+
+resetForm.addEventListener('submit',async(e)=>{
+  e.preventDefault();
+  resetMsg.style.display='none';
+  resetBtn.disabled=true;
+  resetBtn.textContent='메일 보내는 중...';
+  try{
+    await sendPasswordResetEmail(auth,resetEmail.value.trim().toLowerCase(),{
+      url:`${window.location.origin}/member/login.html?passwordReset=complete`
+    });
+    resetMsg.textContent='비밀번호 재설정 메일을 보냈습니다. 이메일함을 확인해 주세요.';
+    resetMsg.style.color='#166534';resetMsg.style.background='#e8f5f0';resetMsg.style.display='block';
+  }catch(err){
+    resetMsg.textContent='재설정 메일을 보내지 못했습니다. 이메일 형식을 확인해 주세요.';
+    resetMsg.style.color='#dc2626';resetMsg.style.background='#ffe8e8';resetMsg.style.display='block';
+  }finally{
+    resetBtn.disabled=false;resetBtn.textContent='재설정 메일 보내기';
   }
 });
 </script>

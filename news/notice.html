@@ -281,10 +281,10 @@ section{padding:64px 24px}
     </div>
     <div class="form-group">
       <label>파일 첨부</label>
-      <div class="file-upload-area" onclick="document.getElementById('fileInput').click()">
-        <input type="file" id="fileInput" style="display:none" onchange="handleFileSelect(this)">
+      <label class="file-upload-area" for="fileInput" style="display:block">
         📎 클릭하여 파일 선택 (최대 10MB)
-      </div>
+      </label>
+      <input type="file" id="fileInput" style="display:none" onchange="handleFileSelect(this)">
       <div class="file-preview" id="filePreview">
         <span id="filePreviewName"></span>
         <button class="file-remove-btn" onclick="removeFile()" title="파일 제거">✕</button>
@@ -332,6 +332,7 @@ section{padding:64px 24px}
 </footer>
 <script type="module">
 const COLLECTION = 'notices';
+const ADMIN_EMAIL = 'hayashi.okada@gmail.com';
 const PAGE_SIZE = 10;
 let allPosts=[], currentPage=1, currentFilter='전체', currentSearch='';
 let currentPostId=null, editMode=false, isAdmin=false;
@@ -396,7 +397,7 @@ async function showDetail(id){
   document.getElementById('detailViews').textContent='👁 '+((n.views||0)+1);
   document.getElementById('detailBody').textContent=n.content;
   const ad=document.getElementById('detailAttach');
-  if(n.file_url&&n.file_name){document.getElementById('detailAttachLink').href=n.file_url;document.getElementById('detailAttachName').textContent=n.file_name;ad.style.display='block';}else ad.style.display='none';
+  if(n.file_url&&n.file_name){const link=document.getElementById('detailAttachLink');link.href=n.file_url;link.download=n.file_name;document.getElementById('detailAttachName').textContent=n.file_name;ad.style.display='block';}else ad.style.display='none';
   const cur=allPosts.findIndex(x=>x.id===id);const prev=allPosts[cur+1],next=allPosts[cur-1];
   const pe=document.getElementById('prevPost'),ne=document.getElementById('nextPost');
   if(prev){pe.textContent='▲ 이전글: '+prev.title;pe.classList.remove('disabled');pe.dataset.id=prev.id;}else{pe.textContent='이전글이 없습니다.';pe.classList.add('disabled');}
@@ -414,6 +415,7 @@ async function doAdminLogin(){
   const email=document.getElementById('adminEmail').value.trim(),pw=document.getElementById('adminPassword').value;
   const btn=document.getElementById('loginBtn'),errEl=document.getElementById('loginError');
   if(!email||!pw){errEl.textContent='이메일과 비밀번호를 입력하세요.';errEl.style.display='block';return;}
+  if(email.toLowerCase()!==ADMIN_EMAIL){errEl.textContent='관리자로 지정된 이메일이 아닙니다.';errEl.style.display='block';return;}
   btn.textContent='로그인 중...';btn.disabled=true;
   try{
     const {signInWithEmailAndPassword}=await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js");
@@ -463,7 +465,8 @@ async function savePost(){
   let file_url=null,file_name=null,file_path=null;
   if(selectedFile){
     try{
-      const path=`${COLLECTION}/${Date.now()}_${selectedFile.name}`;
+      const safeName=selectedFile.name.replace(/[\\/#?]/g,'_');
+      const path=`${COLLECTION}/${Date.now()}_${safeName}`;
       const sRef=ref(window._storage,path);
       await uploadBytes(sRef,selectedFile);
       file_url=await getDownloadURL(sRef);file_name=selectedFile.name;file_path=path;
@@ -473,8 +476,8 @@ async function savePost(){
   try{
     if(editMode){
       const old=allPosts.find(x=>x.id===editMode);
-      if(selectedFile){payload.file_url=file_url;payload.file_name=file_name;payload.file_path=file_path;}
-      else if(removeCurrentFileFlag){payload.file_url=null;payload.file_name=null;payload.file_path=null;}
+      if(selectedFile){payload.file_url=file_url;payload.file_name=file_name;payload.file_path=file_path;payload.file_data=null;payload.file_type=null;}
+      else if(removeCurrentFileFlag){payload.file_url=null;payload.file_name=null;payload.file_path=null;payload.file_data=null;payload.file_type=null;}
       if((selectedFile||removeCurrentFileFlag)&&old&&old.file_path){try{await deleteObject(ref(window._storage,old.file_path));}catch(e){}}
       await updateDoc(doc(window._db,COLLECTION,editMode),payload);
       btn.textContent='저장';btn.disabled=false;showToast('✅ 수정되었습니다.');closeWriteModal();await loadPosts();showDetail(editMode);
@@ -512,7 +515,7 @@ const app=initializeApp({apiKey:"AIzaSyA1APwKMh6ra8K6VFmxbK52iW9dHnQbyrM",authDo
 window._db=getFirestore(app);window._auth=getAuth(app);window._storage=getStorage(app);
 
 onAuthStateChanged(window._auth,(user)=>{
-  isAdmin=!!user;
+  isAdmin=!!user&&user.email===ADMIN_EMAIL;
   const bar=document.getElementById('adminModeBar'),writeBtn=document.getElementById('adminWriteBtn'),accessBtn=document.getElementById('adminAccessBtn');
   if(isAdmin){bar.classList.add('active');writeBtn.style.display='flex';accessBtn.classList.add('on');accessBtn.title='관리자 로그아웃';}
   else{bar.classList.remove('active');writeBtn.style.display='none';accessBtn.classList.remove('on');accessBtn.title='관리자 로그인';document.getElementById('adminActionBtns').style.display='none';}

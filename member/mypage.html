@@ -190,44 +190,38 @@ label{display:block;font-size:.85rem;font-weight:600;color:var(--text);margin-bo
 </div>
 </section>
 <script type="module">
-import { getSupabaseClient } from "./supabase-config.js";
-
-let supabase;
-try{
-  supabase=getSupabaseClient();
-}catch(err){
-  supabase=null;
-}
+import { auth,db } from "./firebase-config.js?v=20260717-2";
+import { onAuthStateChanged,signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { doc,getDoc,setDoc,serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 const section=document.getElementById('mypageSection');
 const loginUrl='/member/login.html?'+new URLSearchParams({redirect:'/member/mypage.html'}).toString();
 
-if(!supabase){
-  window.location.href=loginUrl;
-}else{
-  const {data:{session}}=await supabase.auth.getSession();
-  if(!session?.user){
+onAuthStateChanged(auth,async(user)=>{
+  if(!user||!user.emailVerified){
+    if(user)await signOut(auth);
     window.location.href=loginUrl;
-  }else{
-    const user=session.user;
-    const {data:member}=await supabase
-      .from('members')
-      .select('*')
-      .eq('id',user.id)
-      .maybeSingle();
-    await supabase.from('members').update({status:'approved'}).eq('id',user.id);
-    const meta=user.user_metadata||{};
-    const name=member?.name||meta.name||user.email||'회원';
+    return;
+  }
+  try{
+    const memberRef=doc(db,'members',user.uid);
+    const memberSnap=await getDoc(memberRef);
+    const member=memberSnap.exists()?memberSnap.data():null;
+    await setDoc(memberRef,{email:user.email,emailVerified:true,status:'approved',updatedAt:serverTimestamp()},{merge:true});
+    const name=member?.name||user.displayName||user.email||'회원';
     document.getElementById('memberNameText').textContent=name;
     document.getElementById('memberInitial').textContent=name.trim().charAt(0)||'회';
     document.getElementById('memberStatusText').textContent='승인 회원';
     section.style.display='block';
     document.getElementById('mypageLogoutBtn')?.addEventListener('click',async()=>{
-      await supabase.auth.signOut();
+      await signOut(auth);
       window.location.href='/';
     });
+  }catch(err){
+    console.error('마이페이지 로드 오류:',err);
+    window.location.href=loginUrl;
   }
-}
+});
 </script>
 <footer style="background:#0f2547;color:#c8d5e8;font-family:'Noto Sans KR',sans-serif;padding:0">
 <div style="max-width:1200px;margin:0 auto;padding:48px 24px 32px">

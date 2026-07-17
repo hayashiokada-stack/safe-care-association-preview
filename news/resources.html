@@ -322,7 +322,7 @@ section{padding:64px 24px}
 </footer>
 <script type="module">
 const firebaseConfig={apiKey:"AIzaSyA1APwKMh6ra8K6VFmxbK52iW9dHnQbyrM",authDomain:"safecare-association-backend.firebaseapp.com",projectId:"safecare-association-backend",storageBucket:"safecare-association-backend.firebasestorage.app",messagingSenderId:"848186949487",appId:"1:848186949487:web:b61dd5911b7d35d0b7f29a"};
-const COLLECTION='resources';const PAGE_SIZE=10;
+const COLLECTION='resources';const ADMIN_EMAIL='hayashi.okada@gmail.com';const PAGE_SIZE=10;
 let allPosts=[],currentPage=1,currentFilter='전체',currentSearch='';
 let currentPostId=null,editMode=false,isAdmin=false,selectedFile=null,removeCurrentFileFlag=false;
 
@@ -371,6 +371,7 @@ async function doAdminLogin(){
   const email=document.getElementById('adminEmail').value.trim(),pw=document.getElementById('adminPassword').value;
   const btn=document.getElementById('loginBtn'),errEl=document.getElementById('loginError');
   if(!email||!pw){errEl.textContent='이메일과 비밀번호를 입력하세요.';errEl.style.display='block';return;}
+  if(email.toLowerCase()!==ADMIN_EMAIL){errEl.textContent='관리자로 지정된 이메일이 아닙니다.';errEl.style.display='block';return;}
   btn.textContent='로그인 중...';btn.disabled=true;
   try{const {signInWithEmailAndPassword}=await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js");await signInWithEmailAndPassword(window._auth,email,pw);closeLoginModal();}
   catch(e){errEl.textContent='로그인 실패: '+e.message;errEl.style.display='block';btn.textContent='로그인';btn.disabled=false;}
@@ -417,7 +418,7 @@ const {getStorage}=await import("https://www.gstatic.com/firebasejs/10.14.1/fire
 const app=initializeApp(firebaseConfig);
 window._db=getFirestore(app);window._auth=getAuth(app);window._storage=getStorage(app);
 onAuthStateChanged(window._auth,(user)=>{
-  isAdmin=!!user;
+  isAdmin=!!user&&user.email===ADMIN_EMAIL;
   const bar=document.getElementById('adminModeBar'),writeBtn=document.getElementById('adminWriteBtn'),accessBtn=document.getElementById('adminAccessBtn');
   if(isAdmin){bar.classList.add('active');writeBtn.style.display='flex';accessBtn.classList.add('on');accessBtn.title='관리자 로그아웃';}
   else{bar.classList.remove('active');writeBtn.style.display='none';accessBtn.classList.remove('on');accessBtn.title='관리자 로그인';document.getElementById('adminActionBtns').style.display='none';}

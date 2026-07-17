@@ -1,8 +1,8 @@
-import { getSupabaseClient } from "/member/supabase-config.js";
+import { auth } from "/member/firebase-config.js?v=20260717-2";
+import { onAuthStateChanged,signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
 function labelFromUser(user){
-  const meta=user?.user_metadata||{};
-  return meta.name||user?.email||"회원";
+  return user?.displayName||user?.email||"회원";
 }
 
 function escapeHtml(value){
@@ -19,7 +19,7 @@ function renderLoggedOut(actions){
   actions.innerHTML='<a href="/member/join.html" class="btn-nav-primary">회원가입</a><a href="/member/login.html" class="btn-nav-primary secondary">로그인</a>';
 }
 
-function renderLoggedIn(actions,supabase,user){
+function renderLoggedIn(actions,user){
   const label=labelFromUser(user);
   const safeLabel=escapeHtml(label);
   actions.innerHTML=[
@@ -31,7 +31,7 @@ function renderLoggedIn(actions,supabase,user){
   logoutBtn?.addEventListener("click",async()=>{
     logoutBtn.disabled=true;
     logoutBtn.textContent="로그아웃 중...";
-    await supabase.auth.signOut();
+    await signOut(auth);
     window.location.href="/";
   });
 }
@@ -39,18 +39,8 @@ function renderLoggedIn(actions,supabase,user){
 async function initAuthNav(){
   const actions=document.querySelector("#site-nav .nav-actions");
   if(!actions)return;
-  let supabase;
-  try{
-    supabase=getSupabaseClient();
-  }catch(err){
-    renderLoggedOut(actions);
-    return;
-  }
-  const {data:{session}}=await supabase.auth.getSession();
-  if(session?.user)renderLoggedIn(actions,supabase,session.user);
-  else renderLoggedOut(actions);
-  supabase.auth.onAuthStateChange((_event,session)=>{
-    if(session?.user)renderLoggedIn(actions,supabase,session.user);
+  onAuthStateChanged(auth,(user)=>{
+    if(user?.emailVerified)renderLoggedIn(actions,user);
     else renderLoggedOut(actions);
   });
 }
