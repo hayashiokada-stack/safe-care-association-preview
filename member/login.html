@@ -270,6 +270,9 @@ form.addEventListener('submit',async(e)=>{
 
 document.getElementById('resetPasswordLink').addEventListener('click',(e)=>{
   e.preventDefault();
+  msg.style.display='none';
+  resetMsg.style.display='none';
+  passwordInput.value='';
   resetEmail.value=emailInput.value.trim();
   form.style.display='none';
   resetForm.style.display='block';
@@ -279,6 +282,8 @@ document.getElementById('resetPasswordLink').addEventListener('click',(e)=>{
 document.getElementById('backToLoginBtn').addEventListener('click',()=>{
   resetForm.style.display='none';
   form.style.display='block';
+  resetMsg.style.display='none';
+  resetEmail.value='';
   emailInput.focus();
 });
 
