@@ -134,22 +134,6 @@
     .btn-secondary{display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:white;padding:13px 28px;border-radius:32px;font-size:.95rem;font-weight:700;transition:background .15s}
     .btn-secondary:hover{background:var(--primary-light)}
 
-    /* NEWS */
-    #news{padding:80px 0;background:var(--white)}
-    .news-layout{display:grid;grid-template-columns:1fr 1fr;gap:40px}
-    .news-col-title{font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--primary)}
-    .notice-list{list-style:none}
-    .notice-list li{display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)}
-    .notice-list li:last-child{border-bottom:none}
-    .notice-tag{font-size:.75rem;font-weight:700;border-radius:4px;padding:2px 8px;white-space:nowrap;flex-shrink:0;margin-top:2px}
-    .tag-notice{background:#e8f0fe;color:#2a5298}
-    .tag-press{background:#e6f4ea;color:#1a6b30}
-    .tag-edu{background:#fff3e0;color:#b55a00}
-    .notice-list li a{font-size:.93rem;color:var(--text);flex:1;line-height:1.45}
-    .notice-list li a:hover{color:var(--accent);text-decoration:underline}
-    .notice-date{font-size:.8rem;color:var(--muted);white-space:nowrap;margin-top:2px}
-    .news-more{margin-top:16px;display:inline-flex;align-items:center;gap:4px;font-size:.88rem;font-weight:600;color:var(--accent)}
-    .news-more:hover{text-decoration:underline}
 
     /* CTA */
     #cta{background:linear-gradient(135deg,var(--accent) 0%,#0e6b5e 100%);padding:64px 0;color:white;text-align:center}
@@ -178,7 +162,7 @@
 
     /* 반응형 */
     @media(max-width:1024px){.services-grid{grid-template-columns:repeat(2,1fr)}.edu-grid{grid-template-columns:repeat(2,1fr)}.footer-links{grid-template-columns:1fr 1fr}}
-    @media(max-width:768px){.nav-menu,.nav-actions{display:none}.nav-hamburger{display:flex}#hero{padding:72px 0 64px}#hero h1{font-size:1.9rem}.stats-grid{grid-template-columns:repeat(2,1fr)}.stat-item:nth-child(2){border-right:none}.about-grid{grid-template-columns:1fr;gap:32px}.services-grid{grid-template-columns:1fr}.edu-grid{grid-template-columns:1fr}.news-layout{grid-template-columns:1fr}.footer-links{grid-template-columns:1fr}.footer-bottom{flex-direction:column;text-align:center}}
+    @media(max-width:768px){.nav-menu,.nav-actions{display:none}.nav-hamburger{display:flex}#hero{padding:72px 0 64px}#hero h1{font-size:1.9rem}.stats-grid{grid-template-columns:repeat(2,1fr)}.stat-item:nth-child(2){border-right:none}.about-grid{grid-template-columns:1fr;gap:32px}.services-grid{grid-template-columns:1fr}.edu-grid{grid-template-columns:1fr}.footer-links{grid-template-columns:1fr}.footer-bottom{flex-direction:column;text-align:center}}
   </style>
 </head>
 <body>
@@ -220,13 +204,7 @@
         </div>
       </li>
       <li>
-        <a href="/news/notice.html">소식&amp;자료 <span class="arr">▾</span></a>
-        <div class="dropdown">
-          <a href="/news/notice.html">공지사항</a>
-          <a href="/news/press.html">보도자료</a>
-          <a href="/news/resources.html">자료실</a>
-          
-        </div>
+        <a href="https://cafe.naver.com/safecarekorea" target="_blank" rel="noopener">네이버 카페 ↗</a>
       </li>
       <li>
         <a href="/member/join.html">회원센터 <span class="arr">▾</span></a>
@@ -290,10 +268,8 @@
   <a href="/business/partnership.html">정부·기관 협력</a>
   <span class="m-group-title">교육신청</span>
   <a href="/edu/list.html">교육과정 목록</a>
-  <span class="m-group-title">소식&amp;자료</span>
-  <a href="/news/notice.html">공지사항</a>
-  <a href="/news/press.html">보도자료</a>
-  <a href="/news/resources.html">자료실</a>
+  <span class="m-group-title">커뮤니티</span>
+  <a href="https://cafe.naver.com/safecarekorea" target="_blank" rel="noopener">네이버 카페 ↗</a>
   <span class="m-group-title">회원 / 문의</span>
   <a href="/member/join.html">회원가입</a>
   <a href="/member/login.html">로그인</a>
@@ -493,80 +469,16 @@
   </div>
 </section>
 
-<!-- NEWS -->
-<section id="news">
-  <div class="container">
-    <div style="margin-bottom:2rem">
-      <h2 class="section-title">소식 &amp; 자료</h2>
-      <p class="section-sub">협회의 최신 공지와 보도 소식을 확인하세요</p>
+<!-- CAFE BANNER -->
+<section id="cafe-banner" style="background:linear-gradient(135deg,var(--primary),var(--accent));padding:56px 0">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:28px">
+    <div style="color:#fff">
+      <h2 style="font-size:1.6rem;font-weight:800;margin-bottom:10px">네이버 카페에서 더 많은 소식을 만나보세요</h2>
+      <p style="color:rgba(255,255,255,.85);font-size:.95rem;line-height:1.6">공지사항, 보도자료, 자료 나눔까지 — 한국안전돌봄협회 공식 네이버 카페에서 확인하고 회원들과 소통하세요.</p>
     </div>
-    <div class="news-layout">
-      <div>
-        <div class="news-col-title">📢 공지사항</div>
-        <ul class="notice-list" id="homeNoticeList">
-          <li><span class="notice-tag tag-notice">공지</span><a href="/news/notice.html">2025년 하반기 노리프트 기초과정 모집 안내</a><span class="notice-date">2025.06</span></li>
-          <li><span class="notice-tag tag-edu">교육</span><a href="/edu/list.html">내부강사 양성과정 3기 모집 (선착순 마감)</a><span class="notice-date">2025.05</span></li>
-          <li><span class="notice-tag tag-notice">공지</span><a href="/news/notice.html">협회 회원 기관 현장 컨설팅 신청 접수 시작</a><span class="notice-date">2025.05</span></li>
-          <li><span class="notice-tag tag-notice">공지</span><a href="/news/notice.html">케어콘테스트 2025 참가기관 모집</a><span class="notice-date">2025.04</span></li>
-        </ul>
-        <a href="/news/notice.html" class="news-more">공지사항 전체 보기 →</a>
-      </div>
-      <div>
-        <div class="news-col-title">📰 보도자료 &amp; 자료실</div>
-        <ul class="notice-list" id="homeMediaList">
-          <li><span class="notice-tag tag-press">보도</span><a href="/news/press.html">한국안전돌봄협회, 노리프트 케어 표준 가이드라인 발표</a><span class="notice-date">2025.06</span></li>
-          <li><span class="notice-tag tag-press">보도</span><a href="/news/press.html">돌봄 종사자 근골격계 질환 예방 세미나 개최</a><span class="notice-date">2025.05</span></li>
-          <li><span class="notice-tag tag-press">자료</span><a href="/news/resources.html">2025 안전돌봄 현장 체크리스트 (무료 다운로드)</a><span class="notice-date">2025.04</span></li>
-          <li><span class="notice-tag tag-press">자료</span><a href="/news/resources.html">노리프트 원칙 이해를 위한 입문 가이드</a><span class="notice-date">2025.03</span></li>
-        </ul>
-        <a href="/news/resources.html" class="news-more">자료실 전체 보기 →</a>
-      </div>
-    </div>
+    <a href="https://cafe.naver.com/safecarekorea" target="_blank" rel="noopener" style="flex-shrink:0;background:#03c75a;color:#fff;font-weight:700;padding:16px 32px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:1rem">네이버 카페 바로가기 →</a>
   </div>
 </section>
-<script type="module">
-const firebaseConfig={apiKey:"AIzaSyA1APwKMh6ra8K6VFmxbK52iW9dHnQbyrM",authDomain:"safecare-association-backend.firebaseapp.com",projectId:"safecare-association-backend",storageBucket:"safecare-association-backend.firebasestorage.app",messagingSenderId:"848186949487",appId:"1:848186949487:web:b61dd5911b7d35d0b7f29a"};
-const links={
-  notices:"/news/notice.html",
-  press_releases:"/news/press.html",
-  resources:"/news/resources.html"
-};
-const tagClass={notices:"tag-notice",press_releases:"tag-press",resources:"tag-press"};
-const tagText={notices:"공지",press_releases:"보도",resources:"자료"};
-function fmtDate(ts){if(!ts)return "";const d=ts.toDate?ts.toDate():new Date(ts);if(Number.isNaN(d.getTime()))return "";return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,"0")}`;}
-function itemHtml(post,type){
-  const title=(post.title||"제목 없음").replace(/[<>&"]/g,ch=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[ch]));
-  return `<li><span class="notice-tag ${tagClass[type]}">${tagText[type]}</span><a href="${links[type]}">${title}</a><span class="notice-date">${fmtDate(post.createdAt)}</span></li>`;
-}
-async function loadHomeNews(){
-  try{
-    const {initializeApp}=await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js");
-    const {getFirestore,collection,getDocs,query,orderBy,limit}=await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
-    const app=initializeApp(firebaseConfig);
-    const db=getFirestore(app);
-    const read=async(name,count)=>{
-      try{
-        const snap=await getDocs(query(collection(db,name),orderBy("createdAt","desc"),limit(count)));
-        return snap.docs.map(d=>({id:d.id,...d.data()}));
-      }catch(e){
-        console.warn(`Firebase ${name} load skipped`,e);
-        return [];
-      }
-    };
-    const [notices,press,resources]=await Promise.all([read("notices",4),read("press_releases",2),read("resources",2)]);
-    if(notices.length)document.getElementById("homeNoticeList").innerHTML=notices.map(p=>itemHtml(p,"notices")).join("");
-    const media=[...press.map(p=>[p,"press_releases"]),...resources.map(p=>[p,"resources"])]
-      .sort((a,b)=>{
-        const ad=a[0].createdAt?.toMillis?a[0].createdAt.toMillis():0;
-        const bd=b[0].createdAt?.toMillis?b[0].createdAt.toMillis():0;
-        return bd-ad;
-      })
-      .slice(0,4);
-    if(media.length)document.getElementById("homeMediaList").innerHTML=media.map(([p,type])=>itemHtml(p,type)).join("");
-  }catch(e){console.error("Firebase home news load failed",e);}
-}
-loadHomeNews();
-</script>
 
 <!-- CTA -->
 <section id="cta">
@@ -605,10 +517,9 @@ loadHomeNews();
         </ul>
       </div>
       <div class="footer-col">
-        <h4>소식 &amp; 지원</h4>
+        <h4>커뮤니티 &amp; 지원</h4>
         <ul>
-          <li><a href="/news/notice.html">공지사항</a></li>
-          <li><a href="/news/resources.html">자료실</a></li>
+          <li><a href="https://cafe.naver.com/safecarekorea" target="_blank" rel="noopener">네이버 카페 ↗</a></li>
           <li><a href="/contact/faq.html">자주 묻는 질문</a></li>
           <li><a href="/contact/online.html">온라인 문의</a></li>
         </ul>
