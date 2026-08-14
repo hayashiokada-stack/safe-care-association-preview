@@ -565,6 +565,54 @@ btn.addEventListener('click',()=>{
 });
 menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');btn.querySelectorAll('span').forEach(s=>{s.style.transform='';s.style.opacity=''})}));
 </script>
+<!-- POPUP: 2026 고치 노리프팅케어 연수 -->
+<div id="popupOverlay" class="popup-overlay" role="dialog" aria-modal="true" aria-label="2026 고치 노리프팅케어 연수 안내">
+  <div class="popup-box">
+    <a href="https://cafe.naver.com/safecarekorea" target="_blank" rel="noopener" class="popup-img-link" aria-label="자세히 보기 (네이버 카페)">
+      <img src="images/kochi-nolifting-2026.png?v=20260814" alt="2026 일본 고치 노리프팅케어 스터디 투어 안내 (2026.11.16~11.19, 20명 선착순)">
+    </a>
+    <div class="popup-actions">
+      <a href="https://cafe.naver.com/safecarekorea" target="_blank" rel="noopener" class="popup-detail-btn">자세히 보기 &amp; 신청하기 ↗</a>
+    </div>
+    <div class="popup-bar">
+      <label class="popup-hide"><input type="checkbox" id="popupHideToday"> 오늘 하루 열지 않기</label>
+      <button type="button" class="popup-close-btn" id="popupCloseBtn">닫기 ✕</button>
+    </div>
+  </div>
+</div>
+<style>
+  .popup-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.6);align-items:center;justify-content:center;padding:20px}
+  .popup-overlay.open{display:flex}
+  .popup-box{background:#fff;border-radius:16px;overflow:hidden;max-width:440px;width:100%;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+  .popup-img-link{display:block;overflow:auto;line-height:0}
+  .popup-img-link img{width:100%;height:auto;display:block}
+  .popup-actions{padding:14px 16px 0}
+  .popup-detail-btn{display:block;text-align:center;background:#1e3a5f;color:#fff;font-weight:700;padding:13px;border-radius:10px;text-decoration:none;font-size:15px}
+  .popup-detail-btn:hover{background:#16304e}
+  .popup-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 14px;gap:10px}
+  .popup-hide{font-size:13px;color:#555;display:flex;align-items:center;gap:6px;cursor:pointer}
+  .popup-hide input{width:16px;height:16px;cursor:pointer}
+  .popup-close-btn{background:#eee;border:none;color:#333;font-size:13px;padding:8px 14px;border-radius:8px;cursor:pointer}
+  .popup-close-btn:hover{background:#e0e0e0}
+</style>
+<script>
+(function(){
+  var KEY='kochiPopupHideUntil';
+  var overlay=document.getElementById('popupOverlay');
+  var closeBtn=document.getElementById('popupCloseBtn');
+  var hideChk=document.getElementById('popupHideToday');
+  var hideUntil=parseInt(localStorage.getItem(KEY)||'0',10);
+  if(Date.now()<hideUntil)return;
+  overlay.classList.add('open');
+  function close(){
+    if(hideChk.checked){localStorage.setItem(KEY,String(Date.now()+86400000));}
+    overlay.classList.remove('open');
+  }
+  closeBtn.addEventListener('click',close);
+  overlay.addEventListener('click',function(e){if(e.target===overlay)close();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&overlay.classList.contains('open'))close();});
+})();
+</script>
 <script type="module" src="/member/auth-nav.js?v=20260717-3"></script>
 </body>
 </html>
