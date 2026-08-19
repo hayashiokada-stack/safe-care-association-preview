@@ -1,5 +1,6 @@
 .vercel
-.claude/
+.claude/*
+!.claude/skills/
 .omc/
 .playwright-mcp/
 .firebase/
